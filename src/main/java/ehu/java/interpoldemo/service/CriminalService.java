@@ -5,6 +5,6 @@ import ehu.java.interpoldemo.model.Criminal;
 import java.util.List;
 
 public interface CriminalService {
-    void addCriminal(Criminal criminal);
-    List<Criminal> getAllCriminals();
+    boolean addCriminal(Criminal criminal);
+    List<Criminal> findAllCriminals();
 }

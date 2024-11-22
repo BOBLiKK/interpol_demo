@@ -1,7 +1,26 @@
 package ehu.java.interpoldemo.model;
 import java.time.LocalDate;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 public class Criminal {
+
+
+    //todo
+    public Criminal() {
+    }
+
+    public Criminal(int id, String name, String surname, LocalDate dateOfBirth, String citizenship, String description, double reward, boolean isArrested) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.dateOfBirth = dateOfBirth;
+        this.citizenship = citizenship;
+        this.description = description;
+        this.reward = reward;
+        this.isArrested = isArrested;
+    }
+
     private int id;
     private String name;
     private String surname;
@@ -57,5 +76,35 @@ public class Criminal {
         return isArrested;
     }
     public void setArrested(boolean isArrested) {
+    }
+
+    //todo
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Criminal criminal = (Criminal) o;
+        return id == criminal.id && Double.compare(reward, criminal.reward) == 0 && isArrested == criminal.isArrested && Objects.equals(name, criminal.name) && Objects.equals(surname, criminal.surname) && Objects.equals(dateOfBirth, criminal.dateOfBirth) && Objects.equals(citizenship, criminal.citizenship) && Objects.equals(description, criminal.description);
+    }
+
+    //todo
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, dateOfBirth, citizenship, description, reward, isArrested);
+    }
+
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Criminal.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("name='" + name + "'")
+                .add("surname='" + surname + "'")
+                .add("dateOfBirth=" + dateOfBirth)
+                .add("citizenship='" + citizenship + "'")
+                .add("description='" + description + "'")
+                .add("reward=" + reward)
+                .add("isArrested=" + isArrested)
+                .toString();
     }
 }

@@ -12,16 +12,20 @@ public class CriminalServiceImpl implements CriminalService {
         this.criminalDao = new CriminalDaoImpl();
     }
 
+
+    //todo
     @Override
-    public void addCriminal(Criminal criminal) {
+    public boolean addCriminal(Criminal criminal) {
         if (criminal.getName() == null || criminal.getName().isEmpty()) {
-            throw new IllegalArgumentException("Criminal name cannot be null or empty");
+            //throw new IllegalArgumentException("Criminal name cannot be null or empty");
+            return false;
         }
         criminalDao.saveCriminal(criminal);
+        return true;
+
     }
 
-    @Override
-    public List<Criminal> getAllCriminals() {
-        return criminalDao.getAllCriminals();
+    public List<Criminal> findAllCriminals() {
+        return criminalDao.findAllCriminals();
     }
 }

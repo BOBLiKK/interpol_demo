@@ -1,6 +1,9 @@
 package ehu.java.interpoldemo.controller;
 
 import java.io.*;
+
+import ehu.java.interpoldemo.exception.CommandException;
+import ehu.java.interpoldemo.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ehu.java.interpoldemo.command.Command;
@@ -9,9 +12,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
+import static ehu.java.interpoldemo.constants.PageAttributeConstant.MESSAGE;
+import static ehu.java.interpoldemo.constants.PageNameConstant.ERROR_500_PAGE;
+import static ehu.java.interpoldemo.constants.ParameterNameConstant.COMMAND;
 
 
-@WebServlet(name = "helloServlet", value = "/controller")
+@WebServlet(name = "controller", value = "/controller")
 public class Controller extends HttpServlet {
 
     private static final Logger logger = LogManager.getLogger(Controller.class);
@@ -31,14 +37,20 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        String commandStr = request.getParameter("command");
-        Command command = CommandType.define(commandStr);
-        String page = command.execute(request);
-        request.getRequestDispatcher(page).forward(request, response);
+        try {
+            response.setContentType("text/html");
+            String commandStr = request.getParameter(COMMAND);
+            Command command = CommandType.define(commandStr);
+            String page = command.execute(request);
+            request.getRequestDispatcher(page).forward(request, response);
+        } catch (CommandException e) {
+            logger.error("Command execution failed: ", e);
+            request.setAttribute(MESSAGE, e.getMessage());
+            request.getRequestDispatcher(ERROR_500_PAGE).forward(request, response);
+        }
     }
-
-    public void destroy() {
+        public void destroy() {
+        //todo destroypool
         logger.info("Controller destroyed");
     }
 }

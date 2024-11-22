@@ -3,7 +3,7 @@ package ehu.java.interpoldemo.command;
 import ehu.java.interpoldemo.command.impl.*;
 
 public enum CommandType {
-    ADD_USER(new AddUserCommand()),
+    REGISTER_USER(new RegisterUserCommand()),
     LOGIN(new LoginCommand()),
     LOGOUT(new LogoutCommand()),
     ADD_CRIMINAL(new AddCriminalCommand()),

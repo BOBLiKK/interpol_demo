@@ -1,17 +1,18 @@
 package ehu.java.interpoldemo.dao.impl;
 import ehu.java.interpoldemo.dao.CriminalDao;
-import ehu.java.interpoldemo.dao.connection.ConnectionCreator;
+import ehu.java.interpoldemo.dao.connection.ConnectionPool;
 import ehu.java.interpoldemo.model.Criminal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import static ehu.java.interpoldemo.dao.DaoConstants.*;
+import static ehu.java.interpoldemo.constants.DaoConstant.*;
+import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
 public class CriminalDaoImpl implements CriminalDao {
     @Override
     public void saveCriminal(Criminal criminal) {
         try (
-                Connection connection = ConnectionCreator.createConnection();
+                Connection connection =  ConnectionPool.getInstance().getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CRIMINAL)
         ) {
             preparedStatement.setString(1, criminal.getName());
@@ -23,32 +24,32 @@ public class CriminalDaoImpl implements CriminalDao {
             preparedStatement.setBoolean(7, criminal.isArrested());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error saving criminal to database", e);
+            throw new RuntimeException("Database error", e);
         }
     }
 
     @Override
-    public List<Criminal> getAllCriminals() {
+    public List<Criminal> findAllCriminals() {
         List<Criminal> criminals = new ArrayList<>();
         try (
-                Connection connection = ConnectionCreator.createConnection();
+                Connection connection = ConnectionPool.getInstance().getConnection();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(SELECT_ALL_CRIMINALS)
         ) {
             while (resultSet.next()) {
                 Criminal criminal = new Criminal();
-                criminal.setId(resultSet.getInt("id"));
-                criminal.setName(resultSet.getString("name"));
-                criminal.setSurname(resultSet.getString("surname"));
-                criminal.setDateOfBirth(resultSet.getDate("dateOfBirth").toLocalDate());
-                criminal.setCitizenship(resultSet.getString("citizenship"));
-                criminal.setDescription(resultSet.getString("description"));
-                criminal.setReward(resultSet.getDouble("reward"));
-                criminal.setArrested(resultSet.getBoolean("isArrested"));
+                criminal.setId(resultSet.getInt(ID));
+                criminal.setName(resultSet.getString(NAME));
+                criminal.setSurname(resultSet.getString(SURNAME));
+                criminal.setDateOfBirth(resultSet.getDate(DATE_OF_BIRTH).toLocalDate());
+                criminal.setCitizenship(resultSet.getString(CITIZENSHIP));
+                criminal.setDescription(resultSet.getString(DESCRIPTION));
+                criminal.setReward(resultSet.getDouble(REWARD));
+                criminal.setArrested(resultSet.getBoolean(IS_ARRESTED));
                 criminals.add(criminal);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving criminals from database", e);
+            throw new RuntimeException("Database error", e);
         }
         return criminals;
     }

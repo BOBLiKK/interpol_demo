@@ -8,19 +8,20 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.LocalDate;
 import java.util.List;
-import static ehu.java.interpoldemo.command.CommandConstants.CRIMINAL_LIST_PAGE;
+import static ehu.java.interpoldemo.constants.PageNameConstant.*;
+import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
 public class AddCriminalCommand implements Command {
     private final CriminalService criminalService = new CriminalServiceImpl();
     @Override
     public String execute(HttpServletRequest request) {
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        LocalDate dateOfBirth = LocalDate.parse(request.getParameter("dateOfBirth"));
-        String citizenship = request.getParameter("citizenship");
-        String description = request.getParameter("description");
-        double reward = Double.parseDouble(request.getParameter("reward"));
-        boolean isArrested = Boolean.parseBoolean(request.getParameter("isArrested"));
+        String name = request.getParameter(NAME);
+        String surname = request.getParameter(SURNAME);
+        LocalDate dateOfBirth = LocalDate.parse(request.getParameter(DATE_OF_BIRTH));
+        String citizenship = request.getParameter(CITIZENSHIP);
+        String description = request.getParameter(DESCRIPTION);
+        double reward = Double.parseDouble(request.getParameter(REWARD));
+        boolean isArrested = Boolean.parseBoolean(request.getParameter(IS_ARRESTED));
 
         Criminal criminal = new Criminal();
         criminal.setName(name);
@@ -31,8 +32,8 @@ public class AddCriminalCommand implements Command {
         criminal.setReward(reward);
         criminal.setArrested(isArrested);
         criminalService.addCriminal(criminal);
-        List<Criminal> criminals = criminalService.getAllCriminals();
-        request.setAttribute("criminals", criminals);
+        List<Criminal> criminals = criminalService.findAllCriminals();
+        request.setAttribute(CRIMINALS, criminals);
         return CRIMINAL_LIST_PAGE;
     }
 }
