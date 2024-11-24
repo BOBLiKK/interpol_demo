@@ -2,6 +2,7 @@ package ehu.java.interpoldemo.controller;
 
 import java.io.*;
 
+import ehu.java.interpoldemo.dao.connection.ConnectionPool;
 import ehu.java.interpoldemo.exception.CommandException;
 import ehu.java.interpoldemo.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -49,8 +50,9 @@ public class Controller extends HttpServlet {
             request.getRequestDispatcher(ERROR_500_PAGE).forward(request, response);
         }
     }
-        public void destroy() {
-        //todo destroypool
+
+    public void destroy() {
+        ConnectionPool.getInstance().destroyPool();
         logger.info("Controller destroyed");
     }
 }

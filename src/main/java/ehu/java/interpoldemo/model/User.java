@@ -2,7 +2,7 @@ package ehu.java.interpoldemo.model;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class User {
+public class User extends AbstractModel{
 
     public User() {
     }

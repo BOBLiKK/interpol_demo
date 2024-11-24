@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class Criminal {
+public class Criminal extends AbstractModel {
 
 
     //todo

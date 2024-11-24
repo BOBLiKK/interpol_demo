@@ -1,6 +1,9 @@
 package ehu.java.interpoldemo.dao.impl;
+import ehu.java.interpoldemo.dao.BaseDao;
 import ehu.java.interpoldemo.dao.CriminalDao;
 import ehu.java.interpoldemo.dao.connection.ConnectionPool;
+import ehu.java.interpoldemo.exception.DaoException;
+import ehu.java.interpoldemo.model.AbstractModel;
 import ehu.java.interpoldemo.model.Criminal;
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,7 +11,7 @@ import java.util.List;
 import static ehu.java.interpoldemo.constants.DaoConstant.*;
 import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
-public class CriminalDaoImpl implements CriminalDao {
+public class CriminalDaoImpl extends BaseDao implements CriminalDao {
     @Override
     public void saveCriminal(Criminal criminal) {
         try (
@@ -28,8 +31,26 @@ public class CriminalDaoImpl implements CriminalDao {
         }
     }
 
+
+    //todo
+
     @Override
-    public List<Criminal> findAllCriminals() {
+    public boolean insert(AbstractModel model) throws DaoException {
+        return false;
+    }
+
+    @Override
+    public boolean update(AbstractModel model) throws DaoException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(AbstractModel model) throws DaoException {
+        return false;
+    }
+
+    @Override
+    public List findAll() throws DaoException {
         List<Criminal> criminals = new ArrayList<>();
         try (
                 Connection connection = ConnectionPool.getInstance().getConnection();

@@ -2,7 +2,7 @@ package ehu.java.interpoldemo.model;
 
 import java.time.LocalDate;
 
-public class MissingPerson {
+public class MissingPerson extends AbstractModel {
     private int id;
     private String name;
     private String surname;

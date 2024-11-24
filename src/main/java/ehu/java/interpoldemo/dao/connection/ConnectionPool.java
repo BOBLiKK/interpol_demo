@@ -46,7 +46,7 @@ public class ConnectionPool {
         }
     }
 
-    public static ConnectionPool getInstance() throws SQLException {
+    public static ConnectionPool getInstance()  {
         if (instance == null) {
             if (isInitialized.compareAndSet(false, true)) {
                 try{
@@ -58,8 +58,9 @@ public class ConnectionPool {
             try {
                 latch.await();
             } catch (InterruptedException e) {
-                logger.error("Thread interrupted while awaiting ConnectionPool initialization.", e);
-                throw new SQLException(e);
+                logger.fatal("Thread interrupted while awaiting ConnectionPool initialization.", e);
+                Thread.currentThread().interrupt();
+                throw new RuntimeException("Database error");
             }
         }
         return instance;
@@ -94,34 +95,35 @@ public class ConnectionPool {
         return connection;
     }
 
-
-    //todo
     public void releaseConnection(Connection connection) {
         try {
             usedConnections.remove(connection);
             freeConnections.put(connection);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error("Thread was interrupted while releasing connection back to the pool.", e);
+            Thread.currentThread().interrupt();
         }
     }
 
-
-    //todo
     public void destroyPool() {
-        for (int i = 0; i < NUMBER_OF_CONNECTIONS; i++) {
-            try {
-                Connection connection = freeConnections.take();
-                connection.close();
-            } catch (SQLException | InterruptedException e) {
-                logger.error("Error taking connection: " + e.getMessage());
-            } finally {
-                deregisterDrivers();
+        try {
+            for (Connection connection : freeConnections) {
+                if (!connection.isClosed()) {
+                    connection.close();
+                }
             }
+            for (Connection connection : usedConnections) {
+                if (!connection.isClosed()) {
+                    connection.close();
+                }
+            }
+            }catch (SQLException e) {
+            logger.error("Error taking connection: " + e.getMessage());
+        } finally {
+            deregisterDrivers();
         }
     }
 
-
-    //todo
     private void deregisterDrivers() {
         DriverManager.drivers().forEach(driver -> {
             try {

@@ -1,16 +1,20 @@
 package ehu.java.interpoldemo.dao.impl;
+import ehu.java.interpoldemo.dao.BaseDao;
 import ehu.java.interpoldemo.dao.UserDao;
 import ehu.java.interpoldemo.dao.connection.ConnectionPool;
 import ehu.java.interpoldemo.exception.DaoException;
+import ehu.java.interpoldemo.model.AbstractModel;
 import ehu.java.interpoldemo.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.List;
+
 import static ehu.java.interpoldemo.constants.DaoConstant.*;
 import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl extends BaseDao implements UserDao {
     private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
         @Override
     public String authenticate(String login) throws DaoException {
@@ -78,5 +82,32 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException("Unable to retrieve user. ", e);
         }
         return user;
+    }
+
+
+
+
+
+    //todo
+
+
+    @Override
+    public boolean insert(AbstractModel model) throws DaoException {
+        return false;
+    }
+
+    @Override
+    public boolean update(AbstractModel model) throws DaoException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(AbstractModel model) throws DaoException {
+        return false;
+    }
+
+    @Override
+    public List findAll() throws DaoException {
+        return List.of();
     }
 }

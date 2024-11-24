@@ -4,5 +4,4 @@ import java.util.List;
 
 public interface CriminalDao {
     void saveCriminal(Criminal criminal);
-    List<Criminal> findAllCriminals();
 }
