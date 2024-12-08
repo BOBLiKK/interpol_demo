@@ -5,6 +5,8 @@ import ehu.java.interpoldemo.model.User;
 
 public interface UserDao {
     String authenticate(String login) throws DaoException;
-    void saveUser(User user) throws DaoException;
     User findUserById(int id) throws DaoException;
+    User findUserByLogin(String login) throws DaoException;
+    String findRoleByLogin(String login) throws DaoException;
+    boolean update(User user) throws DaoException;
 }

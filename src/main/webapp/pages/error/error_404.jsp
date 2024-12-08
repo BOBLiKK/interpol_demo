@@ -22,7 +22,7 @@
         </div>
         <div class="card-body">
             <p class="mb-4">We're sorry, but the page you were looking for doesn't exist.</p>
-            <a href="index.jsp" class="btn btn-primary btn-lg">Return to Home</a>
+            <a href="${pageContext.request.contextPath}/controller?command=logout">Return to Home</a>
         </div>
     </div>
 </div>

@@ -23,7 +23,7 @@
         <div class="card-body">
             <p class="mb-4">Something went wrong on our side. Please try again later.</p>
             <p class="text-danger"><strong>Details:</strong> ${message}</p>
-            <a href="/" class="btn btn-secondary btn-lg">Return to Home</a>
+            <a href="${pageContext.request.contextPath}/controller?command=logout">Return to Home</a>
         </div>
     </div>
 </div>

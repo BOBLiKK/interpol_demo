@@ -5,20 +5,17 @@ import java.util.StringJoiner;
 
 public class Criminal extends AbstractModel {
 
+    //todo citizenship should be enum
 
-    //todo
-    public Criminal() {
-    }
-
-    public Criminal(int id, String name, String surname, LocalDate dateOfBirth, String citizenship, String description, double reward, boolean isArrested) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.dateOfBirth = dateOfBirth;
-        this.citizenship = citizenship;
-        this.description = description;
-        this.reward = reward;
-        this.isArrested = isArrested;
+    public Criminal(CriminalBuilder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.surname = builder.surname;
+        this.dateOfBirth = builder.dateOfBirth;
+        this.citizenship = builder.citizenship;
+        this.description = builder.description;
+        this.reward = builder.reward;
+        this.isArrested = builder.isArrested;
     }
 
     private int id;
@@ -33,49 +30,26 @@ public class Criminal extends AbstractModel {
     public int getId() {
         return id;
     }
-    public void setId(int id) {
-        this.id = id;
-    }
     public String getName() {
         return name;
-    }
-    public void setName(String name) {
-        this.name = name;
     }
     public String getSurname() {
         return surname;
     }
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
-    }
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
     }
     public String getCitizenship() {
         return citizenship;
     }
-    public void setCitizenship(String citizenship) {
-        this.citizenship = citizenship;
-    }
     public String getDescription() {
         return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
     }
     public double getReward() {
         return reward;
     }
-    public void setReward(double reward) {
-        this.reward = reward;
-    }
     public boolean isArrested() {
         return isArrested;
-    }
-    public void setArrested(boolean isArrested) {
     }
 
     //todo
@@ -93,7 +67,6 @@ public class Criminal extends AbstractModel {
         return Objects.hash(id, name, surname, dateOfBirth, citizenship, description, reward, isArrested);
     }
 
-
     @Override
     public String toString() {
         return new StringJoiner(", ", Criminal.class.getSimpleName() + "[", "]")
@@ -106,5 +79,52 @@ public class Criminal extends AbstractModel {
                 .add("reward=" + reward)
                 .add("isArrested=" + isArrested)
                 .toString();
+    }
+    //todo
+
+    public static class CriminalBuilder{
+        private int id;
+        private String name;
+        private String surname;
+        private LocalDate dateOfBirth;
+        private String citizenship;
+        private String description;
+        private double reward;
+        private boolean isArrested;
+
+        public CriminalBuilder(String name, String surname){
+            this.name = name;
+            this.surname = surname;
+        }
+
+        public CriminalBuilder setId(int id){
+            this.id = id;
+            return this;
+        }
+
+        public CriminalBuilder setDateOfBirth(LocalDate dateOfBirth) {
+            this.dateOfBirth = dateOfBirth;
+            return this;
+        }
+        public CriminalBuilder setCitizenship(String citizenship) {
+            this.citizenship = citizenship;
+            return this;
+        }
+        public CriminalBuilder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+        public CriminalBuilder setReward(double reward) {
+            this.reward = reward;
+            return this;
+        }
+        public CriminalBuilder setIsArrested(boolean isArrested) {
+            this.isArrested = isArrested;
+            return this;
+        }
+
+        public Criminal build(){
+            return new Criminal(this);
+        }
     }
 }

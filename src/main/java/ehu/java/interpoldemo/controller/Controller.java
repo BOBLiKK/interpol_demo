@@ -1,10 +1,7 @@
 package ehu.java.interpoldemo.controller;
 
 import java.io.*;
-
-import ehu.java.interpoldemo.dao.connection.ConnectionPool;
 import ehu.java.interpoldemo.exception.CommandException;
-import ehu.java.interpoldemo.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ehu.java.interpoldemo.command.Command;
@@ -12,20 +9,17 @@ import ehu.java.interpoldemo.command.CommandType;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-
-import static ehu.java.interpoldemo.constants.PageAttributeConstant.MESSAGE;
+import static ehu.java.interpoldemo.constants.ControllerConstant.*;
+import static ehu.java.interpoldemo.constants.PageAttributeConstant.*;
 import static ehu.java.interpoldemo.constants.PageNameConstant.ERROR_500_PAGE;
-import static ehu.java.interpoldemo.constants.ParameterNameConstant.COMMAND;
+import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
-
-@WebServlet(name = "controller", value = "/controller")
+@WebServlet(name = CONTROLLER, value = CONTROLLER_PATH)
 public class Controller extends HttpServlet {
 
     private static final Logger logger = LogManager.getLogger(Controller.class);
 
-
     public void init() {
-        logger.info("Controller initialized");
     }
 
     @Override
@@ -39,10 +33,24 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            response.setContentType("text/html");
+            response.setContentType(CONTENT_TYPE_TEXT_HTML);
             String commandStr = request.getParameter(COMMAND);
+            request.setAttribute(RESPONSE, response);
             Command command = CommandType.define(commandStr);
             String page = command.execute(request);
+
+
+            //todo
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals(USER) || cookie.getName().equals(ROLE)) {
+                        logger.info("Cookie Name: " + cookie.getName()
+                                + ", Cookie Value: " + cookie.getValue());
+                    }
+                }
+            }
+
             request.getRequestDispatcher(page).forward(request, response);
         } catch (CommandException e) {
             logger.error("Command execution failed: ", e);
@@ -52,7 +60,5 @@ public class Controller extends HttpServlet {
     }
 
     public void destroy() {
-        ConnectionPool.getInstance().destroyPool();
-        logger.info("Controller destroyed");
     }
 }

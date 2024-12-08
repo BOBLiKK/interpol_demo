@@ -1,39 +1,42 @@
 package ehu.java.interpoldemo.command.impl;
 
 import ehu.java.interpoldemo.command.Command;
-import ehu.java.interpoldemo.model.Criminal;
+import ehu.java.interpoldemo.exception.CommandException;
+import ehu.java.interpoldemo.exception.ServiceException;
 import ehu.java.interpoldemo.service.CriminalService;
 import ehu.java.interpoldemo.service.impl.CriminalServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
-import java.util.List;
+import static ehu.java.interpoldemo.constants.PageAttributeConstant.*;
 import static ehu.java.interpoldemo.constants.PageNameConstant.*;
 import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
 public class AddCriminalCommand implements Command {
     private final CriminalService criminalService = new CriminalServiceImpl();
+    private static final Logger logger = LogManager.getLogger(AddCriminalCommand.class);
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request) throws CommandException {
         String name = request.getParameter(NAME);
         String surname = request.getParameter(SURNAME);
-        LocalDate dateOfBirth = LocalDate.parse(request.getParameter(DATE_OF_BIRTH));
+        int day = Integer.parseInt(request.getParameter(DAY));
+        int month = Integer.parseInt(request.getParameter(MONTH));
+        int year = Integer.parseInt(request.getParameter(YEAR));
+        LocalDate dateOfBirth = LocalDate.of(year, month, day);
         String citizenship = request.getParameter(CITIZENSHIP);
         String description = request.getParameter(DESCRIPTION);
         double reward = Double.parseDouble(request.getParameter(REWARD));
-        boolean isArrested = Boolean.parseBoolean(request.getParameter(IS_ARRESTED));
-
-        Criminal criminal = new Criminal();
-        criminal.setName(name);
-        criminal.setSurname(surname);
-        criminal.setDateOfBirth(dateOfBirth);
-        criminal.setCitizenship(citizenship);
-        criminal.setDescription(description);
-        criminal.setReward(reward);
-        criminal.setArrested(isArrested);
-        criminalService.addCriminal(criminal);
-        List<Criminal> criminals = criminalService.findAllCriminals();
-        request.setAttribute(CRIMINALS, criminals);
-        return CRIMINAL_LIST_PAGE;
+        try {
+            if(criminalService.addCriminal(name, surname, dateOfBirth, citizenship, description, reward)){
+                request.setAttribute(MESSAGE, CRIMINAL_ADDED_SUCCESSFULLY);
+            }else{
+                request.setAttribute(MESSAGE, CRIMINAL_NOT_ADDED);
+            }
+        } catch (ServiceException e) {
+            logger.info("Error adding criminal to the database.");
+            throw new CommandException(e);
+        }
+        return ADMIN_DASHBOARD;
     }
 }

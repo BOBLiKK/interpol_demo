@@ -4,32 +4,22 @@ import java.util.StringJoiner;
 
 public class User extends AbstractModel{
 
-    public User() {
-    }
 
-    public User(int id, String login, String password, UserRole  userRole) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.userRole = userRole;
-    }
-
-    public User(String login, String password, UserRole  userRole) {
-        this.login = login;
-        this.password = password;
-        this.userRole = userRole;
-    }
-
-    public User(String login, String password) {
-        this.login = login;
-        this.password = password;
+    private User(UserBuilder builder) {
+        this.id = builder.id;
+        this.login = builder.login;
+        this.password = builder.password;
+        this.email = builder.email;
+        this.userRole = builder.userRole;
     }
 
 
     private int id;
     private String login;
     private String password;
+    private String email;
     private UserRole userRole;
+
 
     public int getId() {
         return id;
@@ -40,26 +30,11 @@ public class User extends AbstractModel{
     public String getPassword() {
         return password;
     }
-
+    public String getEmail() {return email;}
     public UserRole getUserRole() {
         return userRole;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -83,4 +58,42 @@ public class User extends AbstractModel{
                 .add("userRole=" + userRole)
                 .toString();
     }
+
+
+    public static class UserBuilder {
+
+        //todo
+        private int id;
+        private String login;
+        private String password;
+        private String email;
+        private UserRole userRole = UserRole.getDefaultRole();
+
+        public UserBuilder(String login, String password) {
+            this.login = login;
+            this.password = password;
+        }
+
+        public UserBuilder setId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserBuilder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder setUserRole(UserRole userRole) {
+            this.userRole = userRole;
+            return this;
+        }
+
+        public User build(){
+            return new User(this);
+        }
+    }
 }
+
+
+

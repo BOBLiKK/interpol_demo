@@ -3,50 +3,51 @@ import ehu.java.interpoldemo.dao.BaseDao;
 import ehu.java.interpoldemo.dao.CriminalDao;
 import ehu.java.interpoldemo.dao.connection.ConnectionPool;
 import ehu.java.interpoldemo.exception.DaoException;
-import ehu.java.interpoldemo.model.AbstractModel;
 import ehu.java.interpoldemo.model.Criminal;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import static ehu.java.interpoldemo.constants.DaoConstant.*;
 import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
-public class CriminalDaoImpl extends BaseDao implements CriminalDao {
+public class CriminalDaoImpl extends BaseDao<Criminal> implements CriminalDao {
+
+    private static Logger logger = LogManager.getLogger(CriminalDaoImpl.class);
+
     @Override
-    public void saveCriminal(Criminal criminal) {
+    public Criminal findCriminalById(int id) throws DaoException {
+        Criminal criminal = null;
         try (
-                Connection connection =  ConnectionPool.getInstance().getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CRIMINAL)
+                Connection connection = ConnectionPool.getInstance().getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_CRIMINAL_BY_ID)
         ) {
-            preparedStatement.setString(1, criminal.getName());
-            preparedStatement.setString(2, criminal.getSurname());
-            preparedStatement.setDate(3, Date.valueOf(criminal.getDateOfBirth()));
-            preparedStatement.setString(4, criminal.getCitizenship());
-            preparedStatement.setString(5, criminal.getDescription());
-            preparedStatement.setDouble(6, criminal.getReward());
-            preparedStatement.setBoolean(7, criminal.isArrested());
-            preparedStatement.executeUpdate();
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String name = resultSet.getString(NAME);
+                String surname = resultSet.getString(SURNAME);
+                LocalDate dateOfBirth = resultSet.getDate(DATE_OF_BIRTH_DAO).toLocalDate();
+                String citizenship = resultSet.getString(CITIZENSHIP);
+                String description = resultSet.getString(DESCRIPTION);
+                double reward = resultSet.getDouble(REWARD);
+                boolean isArrested = resultSet.getBoolean(IS_ARRESTED);
+                criminal = new Criminal.CriminalBuilder(name, surname).
+                        setId(id).
+                        setDateOfBirth(dateOfBirth).
+                        setCitizenship(citizenship).
+                        setDescription(description).
+                        setReward(reward).
+                        setIsArrested(isArrested).build();
+            }
         } catch (SQLException e) {
-            throw new RuntimeException("Database error", e);
+            logger.error("Error retrieving criminal with ID: " + id, e);
+            throw new DaoException("Unable to retrieve criminal. ", e);
         }
-    }
-
-
-    //todo
-
-    @Override
-    public boolean insert(AbstractModel model) throws DaoException {
-        return false;
-    }
-
-    @Override
-    public boolean update(AbstractModel model) throws DaoException {
-        return false;
-    }
-
-    @Override
-    public boolean delete(AbstractModel model) throws DaoException {
-        return false;
+        return criminal;
     }
 
     @Override
@@ -58,20 +59,69 @@ public class CriminalDaoImpl extends BaseDao implements CriminalDao {
                 ResultSet resultSet = statement.executeQuery(SELECT_ALL_CRIMINALS)
         ) {
             while (resultSet.next()) {
-                Criminal criminal = new Criminal();
-                criminal.setId(resultSet.getInt(ID));
-                criminal.setName(resultSet.getString(NAME));
-                criminal.setSurname(resultSet.getString(SURNAME));
-                criminal.setDateOfBirth(resultSet.getDate(DATE_OF_BIRTH).toLocalDate());
-                criminal.setCitizenship(resultSet.getString(CITIZENSHIP));
-                criminal.setDescription(resultSet.getString(DESCRIPTION));
-                criminal.setReward(resultSet.getDouble(REWARD));
-                criminal.setArrested(resultSet.getBoolean(IS_ARRESTED));
+                int id = resultSet.getInt(ID);
+                String name = resultSet.getString(NAME);
+                String surname = resultSet.getString(SURNAME);
+                LocalDate dateOfBirth = resultSet.getDate(DATE_OF_BIRTH_DAO).toLocalDate();
+                String citizenship = resultSet.getString(CITIZENSHIP);
+                String description = resultSet.getString(DESCRIPTION);
+                double reward = resultSet.getDouble(REWARD);
+                boolean isArrested = resultSet.getBoolean(IS_ARRESTED);
+                Criminal criminal = new Criminal.CriminalBuilder(name, surname).
+                setId(id).
+                setDateOfBirth(dateOfBirth).
+                setCitizenship(citizenship).
+                setDescription(description).
+                setReward(reward).
+                setIsArrested(isArrested).build();
                 criminals.add(criminal);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Database error", e);
+            logger.info("Error in database level");
+            throw new DaoException("Database error", e);
         }
         return criminals;
+    }
+
+    @Override
+    protected String getInsertQuery() {
+        return INSERT_CRIMINAL;
+    }
+
+    @Override
+    protected void prepareInsertStatement(PreparedStatement preparedStatement, Criminal criminal) throws SQLException {
+        preparedStatement.setString(1, criminal.getName());
+        preparedStatement.setString(2, criminal.getSurname());
+        preparedStatement.setDate(3, Date.valueOf(criminal.getDateOfBirth()));
+        preparedStatement.setString(4, criminal.getCitizenship());
+        preparedStatement.setString(5, criminal.getDescription());
+        preparedStatement.setDouble(6, criminal.getReward());
+    }
+
+    @Override
+    protected String getUpdateQuery() {
+        return UPDATE_CRIMINAL;
+    }
+
+    @Override
+    protected void prepareUpdateStatement(PreparedStatement preparedStatement, Criminal criminal) throws SQLException {
+        preparedStatement.setString(1, criminal.getName());
+        preparedStatement.setString(2, criminal.getSurname());
+        preparedStatement.setDate(3, Date.valueOf(criminal.getDateOfBirth()));
+        preparedStatement.setString(4, criminal.getCitizenship());
+        preparedStatement.setString(5, criminal.getDescription());
+        preparedStatement.setDouble(6, criminal.getReward());
+        preparedStatement.setBoolean(7, criminal.isArrested());
+        preparedStatement.setInt(8, criminal.getId());
+    }
+
+    @Override
+    protected String getDeleteQuery() {
+        return DELETE_CRIMINAL;
+    }
+
+    @Override
+    protected void prepareDeleteStatement(PreparedStatement preparedStatement, Criminal criminal) throws SQLException {
+        preparedStatement.setInt(1, criminal.getId());
     }
 }
