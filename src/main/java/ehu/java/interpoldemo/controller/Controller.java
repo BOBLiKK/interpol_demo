@@ -39,7 +39,6 @@ public class Controller extends HttpServlet {
             Command command = CommandType.define(commandStr);
             String page = command.execute(request);
 
-
             //todo
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
@@ -50,7 +49,6 @@ public class Controller extends HttpServlet {
                     }
                 }
             }
-
             request.getRequestDispatcher(page).forward(request, response);
         } catch (CommandException e) {
             logger.error("Command execution failed: ", e);

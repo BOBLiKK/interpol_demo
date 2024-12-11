@@ -7,11 +7,13 @@ import ehu.java.interpoldemo.model.Criminal;
 import ehu.java.interpoldemo.service.CriminalService;
 import ehu.java.interpoldemo.service.impl.CriminalServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.List;
-import static ehu.java.interpoldemo.constants.ParameterNameConstant.CRIMINALS;
+
 import static ehu.java.interpoldemo.constants.PageNameConstant.*;
+import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
 public class ViewCriminalListCommand implements Command {
     private final CriminalService criminalService = new CriminalServiceImpl();
@@ -22,13 +24,16 @@ public class ViewCriminalListCommand implements Command {
         try {
             List<Criminal> criminals = criminalService.findAllCriminals();
             request.setAttribute(CRIMINALS, criminals);
-            return ADMIN_CRIMINAL_LIST;
+            HttpSession session = request.getSession(false);
+            String role = (String) session.getAttribute(ROLE);
+            if(role.equals(ADMIN)){
+                return ADMIN_CRIMINAL_LIST;
+            }else{
+                return GUEST_CRIMINAL_LIST;
+            }
         } catch (ServiceException e) {
             logger.info("Error retrieving criminals list. ");
             throw new CommandException( e);
         }
     }
-
-
-
 }

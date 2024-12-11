@@ -32,27 +32,72 @@
         <div class="mb-3">
             <label class="form-label">Date of Birth</label>
             <div class="d-flex">
-                <select name="day" class="form-select me-2" required>
+                <!-- Days -->
+                <select name="day" id="day" class="form-select me-2" required>
                     <c:forEach var="i" begin="1" end="31">
                         <option value="${i}">${i}</option>
                     </c:forEach>
                 </select>
 
                 <!-- Months -->
-                <select name="month" class="form-select me-2" required>
+                <select name="month" id="month" class="form-select me-2" required>
                     <c:forEach var="i" begin="1" end="12">
                         <option value="${i}">${i}</option>
                     </c:forEach>
                 </select>
 
                 <!-- Years -->
-                <select name="year" class="form-select" required>
+                <select name="year" id="year" class="form-select" required>
                     <c:forEach var="i" begin="1900" end="2024">
                         <option value="${i}">${i}</option>
                     </c:forEach>
                 </select>
             </div>
         </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const daySelect = document.getElementById('day');
+                const monthSelect = document.getElementById('month');
+                const yearSelect = document.getElementById('year');
+
+                // Обновление количества дней в зависимости от месяца и года
+                function updateDays() {
+                    const month = parseInt(monthSelect.value, 10);
+                    const year = parseInt(yearSelect.value, 10);
+
+                    // Определяем количество дней в месяце
+                    const daysInMonth = new Date(year, month, 0).getDate();
+
+                    // Сохраняем выбранный день
+                    const selectedDay = parseInt(daySelect.value, 10);
+
+                    // Очищаем текущие опции
+                    daySelect.innerHTML = '';
+
+                    // Добавляем нужное количество дней
+                    for (let i = 1; i <= daysInMonth; i++) {
+                        const option = document.createElement('option');
+                        option.value = i;
+                        option.textContent = i;
+                        daySelect.appendChild(option);
+                    }
+
+                    // Восстанавливаем выбранный день, если он допустим
+                    if (selectedDay <= daysInMonth) {
+                        daySelect.value = selectedDay;
+                    }
+                }
+
+                // Слушатели событий для изменения месяца и года
+                monthSelect.addEventListener('change', updateDays);
+                yearSelect.addEventListener('change', updateDays);
+
+                // Инициализация при загрузке
+                updateDays();
+            });
+        </script>
+
 
         <div class="mb-3">
             <label for="citizenship" class="form-label">Citizenship</label>

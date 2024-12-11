@@ -6,6 +6,7 @@ import ehu.java.interpoldemo.exception.ServiceException;
 import ehu.java.interpoldemo.service.CriminalService;
 import ehu.java.interpoldemo.service.impl.CriminalServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ public class AddCriminalCommand implements Command {
         LocalDate dateOfBirth = LocalDate.of(year, month, day);
         String citizenship = request.getParameter(CITIZENSHIP);
         String description = request.getParameter(DESCRIPTION);
+
         double reward = Double.parseDouble(request.getParameter(REWARD));
         try {
             if(criminalService.addCriminal(name, surname, dateOfBirth, citizenship, description, reward)){

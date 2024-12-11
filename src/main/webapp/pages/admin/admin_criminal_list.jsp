@@ -42,7 +42,6 @@
 <table>
   <thead>
   <tr>
-    <th>ID</th>
     <th>Name</th>
     <th>Surname</th>
     <th>Date of Birth</th>
@@ -56,14 +55,21 @@
   <tbody>
   <c:forEach var="criminal" items="${criminals}">
     <tr>
-      <td><c:out value="${criminal.id}" /></td>
       <td><c:out value="${criminal.name}" /></td>
       <td><c:out value="${criminal.surname}" /></td>
       <td><c:out value="${criminal.dateOfBirth}" /></td>
       <td><c:out value="${criminal.citizenship}" /></td>
       <td><c:out value="${criminal.description}" /></td>
       <td><c:out value="${criminal.reward}" /></td>
-      <td><c:out value="${criminal.arrested}" /></td>
+      <td> <c:choose>
+        <c:when test="${criminal.arrested}">
+          Yes
+        </c:when>
+        <c:otherwise>
+          No
+        </c:otherwise>
+      </c:choose>
+      </td>
       <td>
         <form action="controller" method="post" style="display:inline-block;">
           <input type="hidden" name="command" value="edit_criminal_form" />

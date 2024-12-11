@@ -36,7 +36,7 @@
             <button type="submit" class="btn btn-primary btn-block">Log In</button>
         </form>
 
-        <form action="pages/registeruser.jsp" method="GET">
+        <form action="pages/register_user.jsp" method="GET">
             <button type="submit" class="btn btn-secondary btn-block">Register</button>
         </form>
     </div>

@@ -58,7 +58,8 @@
     <div class="body">
         <h5>Hello, ${user}!</h5>
         <p>You are now logged in. Feel free to explore.</p>
-        <a href="controller?command=logout" class="btn btn-danger btn-lg mt-3">Logout</a>
+        <a href="${pageContext.request.contextPath}/controller?command=view_criminal_list&admin=false" class="btn btn-primary btn-lg mt-3">View Criminals</a>
+        <a href="${pageContext.request.contextPath}/controller?command=logout" class="btn btn-danger btn-lg mt-3">Logout</a>
     </div>
     <div class="footer">
         Thank you for visiting!
@@ -67,3 +68,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

@@ -25,7 +25,7 @@ public class ConnectionPool {
     private static Properties prop = new Properties();
     private static CountDownLatch latch = new CountDownLatch(1);
     private static AtomicBoolean isInitialized = new AtomicBoolean(false);
-    private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
+    private static final Logger logger = LogManager.getLogger(ConnectionPool .class);
 
     static {
         prop.put("user", DATABASE_USER);
@@ -77,7 +77,6 @@ public class ConnectionPool {
         }
     }
 
-
     public Connection getConnection() throws SQLException {
         Connection connection;
         try {
@@ -92,7 +91,21 @@ public class ConnectionPool {
             Thread.currentThread().interrupt();
             throw new SQLException("Thread was interrupted while waiting for a connection.", e);
         }
-        return connection;
+        return createProxyConnection(connection);
+    }
+
+    private Connection createProxyConnection(Connection connection) {
+        return (Connection) java.lang.reflect.Proxy.newProxyInstance(
+                connection.getClass().getClassLoader(),
+                new Class<?>[]{Connection.class},
+                (proxy, method, args) -> {
+                    if ("close".equals(method.getName())) {
+                        releaseConnection(connection);
+                        return null;
+                    }
+                    return method.invoke(connection, args);
+                }
+        );
     }
 
     public void releaseConnection(Connection connection) {

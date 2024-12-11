@@ -7,6 +7,7 @@ import ehu.java.interpoldemo.model.Criminal;
 import ehu.java.interpoldemo.service.CriminalService;
 import ehu.java.interpoldemo.service.impl.CriminalServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
@@ -21,7 +22,6 @@ public class EditCriminalCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-
         try {
             int criminalId = Integer.parseInt(request.getParameter(ID));
             String name = request.getParameter(NAME);
@@ -38,7 +38,6 @@ public class EditCriminalCommand implements Command {
                     .setDescription(description)
                     .setReward(reward)
                     .build();
-
             if (criminalService.editCriminal(criminal)) {
                 request.setAttribute(MESSAGE, CRIMINAL_UPDATED);
             } else {

@@ -92,12 +92,14 @@
 </form>
 
 <script>
-    const message = "${message}";
-    if (message.trim().length > 0) {
+    document.addEventListener('DOMContentLoaded', () => {
         const alert = document.getElementById('errorAlert');
-        alert.classList.add('show');
-    }
+        if (alert && alert.textContent.trim().length > 0) {
+            alert.classList.add('show');
+        }
+    })
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
