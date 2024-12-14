@@ -6,13 +6,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="localization.buttons" var="buttons" />
+<fmt:setBundle basename="localization.messages" var="messages" />
+<fmt:setBundle basename="localization.titles" var="titles"/>
+<fmt:setBundle basename="localization.tables" var="tables"/>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main</title>
+    <title><fmt:message bundle="${titles}" key="title.main"/></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -53,16 +59,12 @@
 <body>
 <div class="main-container">
     <div class="header">
-        <h1>Welcome</h1>
+        <h1><fmt:message bundle="${messages}" key="message.welcome"/></h1>
     </div>
     <div class="body">
-        <h5>Hello, ${user}!</h5>
-        <p>You are now logged in. Feel free to explore.</p>
-        <a href="${pageContext.request.contextPath}/controller?command=view_criminal_list&admin=false" class="btn btn-primary btn-lg mt-3">View Criminals</a>
-        <a href="${pageContext.request.contextPath}/controller?command=logout" class="btn btn-danger btn-lg mt-3">Logout</a>
-    </div>
-    <div class="footer">
-        Thank you for visiting!
+        <h5><fmt:message bundle="${messages}" key="message.hello"/> , ${user}!</h5>
+        <a href="${pageContext.request.contextPath}/controller?command=view_criminal_list&admin=false" class="btn btn-primary btn-lg mt-3"><fmt:message bundle="${buttons}" key="button.view_criminals"/></a>
+        <a href="${pageContext.request.contextPath}/controller?command=logout" class="btn btn-danger btn-lg mt-3"><fmt:message bundle="${buttons}" key="button.logout"/></a>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

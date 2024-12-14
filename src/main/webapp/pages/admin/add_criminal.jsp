@@ -6,31 +6,37 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="localization.buttons" var="buttons" />
+<fmt:setBundle basename="localization.messages" var="messages" />
+<fmt:setBundle basename="localization.titles" var="titles"/>
+<fmt:setBundle basename="localization.tables" var="tables"/>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Add Criminal</title>
+    <title><fmt:message bundle="${titles}" key="title.add_criminal"/></title
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Add Criminal</h1>
+    <h1><fmt:message bundle="${titles}" key="title.add_criminal"/></h1>
     <form method="POST" action="${pageContext.request.contextPath}/controller" class="border p-4 rounded shadow">
         <input type="hidden" name="command" value="add_criminal"/>
 
         <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
+            <label for="name"><fmt:message bundle="${tables}" key="table.name"/></label>
             <input type="text" name="name" id="name" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="surname" class="form-label">Surname</label>
+            <label for="name"><fmt:message bundle="${tables}" key="table.surname"/></label>
             <input type="text" name="surname" id="surname" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Date of Birth</label>
+            <label for="name"><fmt:message bundle="${tables}" key="table.date_of_birth"/></label>
             <div class="d-flex">
                 <!-- Days -->
                 <select name="day" id="day" class="form-select me-2" required>
@@ -98,27 +104,26 @@
             });
         </script>
 
-
         <div class="mb-3">
-            <label for="citizenship" class="form-label">Citizenship</label>
+            <label for="name"><fmt:message bundle="${tables}" key="table.citizenship"/></label>
             <input type="text" name="citizenship" id="citizenship" class="form-control">
         </div>
 
-
         <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
+            <label for="name"><fmt:message bundle="${tables}" key="table.description"/></label>
             <textarea name="description" id="description" class="form-control"></textarea>
         </div>
 
         <div class="mb-3">
-            <label for="reward" class="form-label">Reward</label>
+            <label for="name"><fmt:message bundle="${tables}" key="table.reward"/></label>
             <input type="number" step="0.01" name="reward" id="reward" class="form-control">
         </div>
 
         <div class="text-center">
-            <button type="submit" class="btn btn-success w-100">Submit</button>
+            <button type="submit"><fmt:message bundle="${buttons}" key="button.submit"/></button>
         </div>
     </form>
+    <button onclick="history.back()" class="btn-back"><fmt:message bundle="${buttons}" key="button.back"/></button>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

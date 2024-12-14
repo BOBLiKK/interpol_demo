@@ -6,11 +6,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="localization.buttons" var="buttons" />
+<fmt:setBundle basename="localization.messages" var="messages" />
+<fmt:setBundle basename="localization.titles" var="titles"/>
+<fmt:setBundle basename="localization.tables" var="tables"/>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title><fmt:message bundle="${titles}" key="title.admin_dashboard"/></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -65,18 +72,17 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-        <span class="navbar-brand">Admin: ${user}</span>
+        <span class="navbar-brand"><fmt:message bundle="${messages}" key="message.welcome"/>: ${user}</span>
         <div class="navbar-nav ms-auto">
-            <a href="${pageContext.request.contextPath}/controller?command=add_criminal_form&admin=true" class="nav-link">Add Criminal</a>
-            <a href="${pageContext.request.contextPath}/controller?command=view_criminal_list&admin=true" class="nav-link">View Criminals</a>
+            <a href="${pageContext.request.contextPath}/controller?command=add_criminal_form&admin=true" class="nav-link"><fmt:message bundle="${buttons}" key="button.add_criminal"/></a>
+            <a href="${pageContext.request.contextPath}/controller?command=view_criminal_list&admin=true" class="nav-link"><fmt:message bundle="${buttons}" key="button.view_criminals"/></a>
         </div>
     </div>
 </nav>
 
-
 <div class="container main-container">
-    <h1 class="mb-4">Welcome to the Interpol Admin Workspace</h1>
-    <p>Use the navigation bar to manage criminals.</p>
+    <h1 class="mb-4"><fmt:message bundle="${titles}" key="header.admin_dashboard"/></h1>
+    <p><fmt:message bundle="${messages}" key="message.admin_navigation"/></p>
 </div>
 
 <div id="errorAlert" class="alert alert-danger alert-dismissible fade" role="alert">
@@ -88,7 +94,7 @@
 <form method="GET" action="${pageContext.request.contextPath}/controller">
     <input type="hidden" name="admin" value="true"/>
     <input type="hidden" name="command" value="logout"/>
-    <button type="submit" class="logout-button">Logout</button>
+    <button type="submit" class="logout-button"><fmt:message bundle="${buttons}" key="button.logout"/></button>
 </form>
 
 <script>

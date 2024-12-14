@@ -6,13 +6,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="localization.buttons" var="buttons" />
+<fmt:setBundle basename="localization.messages" var="messages" />
+<fmt:setBundle basename="localization.titles" var="titles"/>
+<fmt:setBundle basename="localization.tables" var="tables"/>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration</title>
+    <title><fmt:message bundle="${titles}" key="title.registration"/></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -39,18 +45,18 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header bg-primary text-white text-center">
-                    <h3>User Registration</h3>
+                    <h3><fmt:message bundle="${titles}" key="title.registration"/></h3>
                 </div>
                 <div class="card-body">
 
                     <div class="mb-3">
-                        <label class="form-label">Choose Registration Type</label>
+                        <label class="form-label"><fmt:message bundle="${titles}" key="title.choose_registration_type"/></label>
                         <div>
                             <input type="radio" id="standard-option" name="registrationType" value="standard" onclick="toggleForm('standard')" checked>
-                            <label for="standard-option">Standard</label>
+                            <label for="standard-option"><fmt:message bundle="${buttons}"  key="button.standard"/></label>
 
                             <input type="radio" id="email-option" name="registrationType" value="email" onclick="toggleForm('email')">
-                            <label for="email-option">Email</label>
+                            <label for="email-option"><fmt:message bundle="${buttons}" key="button.email"/></label>
                         </div>
                     </div>
 
@@ -59,7 +65,7 @@
                         <input type="hidden" name="command" value="register_user"/>
 
                         <div class="mb-3">
-                            <label for="login" class="form-label">Login</label>
+                            <label for="login" class="form-label"><fmt:message bundle="${titles}" key="title.login"/></label>
                             <input type="text" name="login" id="login" class="form-control" value="${param.login}">
                             <span class="text-danger">
                                 <c:if test="${not empty validationErrors['login']}">
@@ -69,7 +75,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
+                            <label for="password" class="form-label"><fmt:message bundle="${titles}" key="title.password"/></label>
                             <input type="password" name="password" id="password" class="form-control">
                             <span class="text-danger">
                                 <c:if test="${not empty validationErrors['password']}">
@@ -85,7 +91,7 @@
                         </c:if>
 
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Register</button>
+                            <button type="submit" class="btn btn-primary"><fmt:message bundle="${buttons}" key="button.register"/></button>
                         </div>
                     </form>
 
@@ -94,7 +100,7 @@
                         <input type="hidden" name="command" value="register_user_with_email"/>
 
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
+                            <label for="email" class="form-label"><fmt:message bundle="${titles}" key="title.email"/></label>
                             <input type="email" name="email" id="email" class="form-control" value="${param.email}">
                             <span class="text-danger">
                                 <c:if test="${not empty validationErrors['email']}">
@@ -104,7 +110,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
+                            <label for="password" class="form-label"><fmt:message bundle="${titles}" key="title.password"/></label>
                             <input type="password" name="password" id="password" class="form-control">
                             <span class="text-danger">
                                 <c:if test="${not empty validationErrors['password']}">
@@ -120,7 +126,7 @@
                         </c:if>
 
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Register with Email</button>
+                            <button type="submit" class="btn btn-primary"><fmt:message bundle="${buttons}" key="button.register"/></button>
                         </div>
                     </form>
 

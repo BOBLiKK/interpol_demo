@@ -1,10 +1,20 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="localization.buttons" var="buttons" />
+<fmt:setBundle basename="localization.messages" var="messages" />
+<fmt:setBundle basename="localization.titles" var="titles"/>
+<fmt:setBundle basename="localization.tables" var="tables"/>
+
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interpol Demo</title>
+    <title><fmt:message bundle="${titles}" key="title.interpol_demo"/></title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -29,15 +39,25 @@
 </head>
 <body>
 <div class="main-container">
-    <h1 class="mb-4">Welcome to Interpol Demo</h1>
-    <p class="mb-4">Please select an option to proceed:</p>
+    <h1 class="mb-4"><fmt:message bundle="${messages}" key="message.welcome_index"/></h1>
+
+    <!-- Форма для выбора языка -->
+    <form method="GET" action="index.jsp" class="mb-4">
+        <select name="lang" onchange="this.form.submit()" class="form-select">
+            <option value="en" ${sessionScope.locale == 'en' ? 'selected' : ''}>English</option>
+            <option value="ru" ${sessionScope.locale == 'ru' ? 'selected' : ''}>Русский</option>
+        </select>
+    </form>
+
+
+
     <div class="d-grid gap-4">
         <form action="pages/login.jsp" method="GET">
-            <button type="submit" class="btn btn-primary btn-block">Log In</button>
+            <button type="submit" class="btn btn-primary btn-block"><fmt:message bundle="${buttons}"  key="button.login"/></button>
         </form>
 
         <form action="pages/register_user.jsp" method="GET">
-            <button type="submit" class="btn btn-secondary btn-block">Register</button>
+            <button type="submit" class="btn btn-secondary btn-block"><fmt:message bundle="${buttons}"  key="button.register"/></button>
         </form>
     </div>
 </div>

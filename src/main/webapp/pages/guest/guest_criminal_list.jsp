@@ -6,14 +6,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="localization.buttons" var="buttons" />
+<fmt:setBundle basename="localization.messages" var="messages" />
+<fmt:setBundle basename="localization.titles" var="titles"/>
+<fmt:setBundle basename="localization.tables" var="tables"/>
 <!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Criminal List</title>
+  <title><fmt:message bundle="${titles}" key="title.criminal_list"/></title>
   <style>
     table {
       width: 100%;
@@ -42,13 +47,13 @@
 <table>
   <thead>
   <tr>
-    <th>Name</th>
-    <th>Surname</th>
-    <th>Date of Birth</th>
-    <th>Citizenship</th>
-    <th>Description</th>
-    <th>Reward</th>
-    <th>Arrested</th>
+    <th><fmt:message bundle="${tables}" key="table.name"/></th>
+    <th><fmt:message bundle="${tables}" key="table.surname"/></th>
+    <th><fmt:message bundle="${tables}" key="table.date_of_birth"/></th>
+    <th><fmt:message bundle="${tables}" key="table.citizenship"/></th>
+    <th><fmt:message bundle="${tables}" key="table.description"/></th>
+    <th><fmt:message bundle="${tables}" key="table.reward"/></th>
+    <th><fmt:message bundle="${tables}" key="table.arrested"/></th>
   </tr>
   </thead>
   <tbody>
@@ -62,10 +67,10 @@
       <td><c:out value="${criminal.reward}" /></td>
       <td> <c:choose>
         <c:when test="${criminal.arrested}">
-          Yes
+          <fmt:message bundle="${messages}" key="message.yes"/>
         </c:when>
         <c:otherwise>
-          No
+          <fmt:message bundle="${messages}" key="message.no"/>
         </c:otherwise>
       </c:choose>
       </td>
@@ -74,7 +79,7 @@
   </tbody>
 </table>
 <div class="btn-container">
-  <button onclick="history.back()" class="btn-back">Back</button>
+  <button onclick="history.back()" class="btn-back"><fmt:message bundle="${buttons}" key="button.back"/></button>
 </div>
 </body>
 </html>
