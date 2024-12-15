@@ -7,17 +7,14 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
+import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
-
-//todo
 
 @WebFilter("/*")
 public class AdminAccessFilter implements Filter {
 
     private static final Logger logger = LogManager.getLogger(AdminAccessFilter.class);
     private static final String ADMIN_PARAM = "admin";
-    private static final String ROLE = "role";
-    private static final String ADMIN = "ADMIN";
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

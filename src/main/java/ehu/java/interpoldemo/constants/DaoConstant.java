@@ -22,7 +22,6 @@ public final class DaoConstant {
             "surname = ?, date_of_birth = ?, citizenship = ?, description = ?, " +
             "reward = ?, is_arrested = ? WHERE id = ?";
 
-
     //delete queries
     public static final String DELETE_CRIMINAL = "DELETE FROM criminals WHERE id = ?";
     public static final String DELETE_USER = "DELETE FROM users WHERE id = ?";

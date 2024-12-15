@@ -1,5 +1,4 @@
 package ehu.java.interpoldemo.email;
-
 import java.util.Properties;
 import jakarta.mail.PasswordAuthentication;
 import jakarta.mail.Session;

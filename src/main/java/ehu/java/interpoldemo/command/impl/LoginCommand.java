@@ -27,17 +27,19 @@ public class LoginCommand implements Command {
             if (userService.authenticate(login, password)) {
                HttpSession session = request.getSession(true);
                 String role = userService.findRole(login);
+                String language = (String) session.getAttribute(LOCALE);
                 session.setAttribute(USER, login);
                 session.setAttribute(ROLE, role);
-
                 Cookie userCookie = new Cookie(USER, login);
                 Cookie roleCookie = new Cookie(ROLE, role);
+                Cookie languageCooke = new Cookie(LANG, language);
                 userCookie.setMaxAge(3600);
                 roleCookie.setMaxAge(3600);
+                languageCooke.setMaxAge(3600);
                 HttpServletResponse response = (HttpServletResponse) request.getAttribute(RESPONSE);
                 response.addCookie(userCookie);
                 response.addCookie(roleCookie);
-
+                response.addCookie(languageCooke);
                 if (role.equals(ADMIN)) {
                     page = ADMIN_DASHBOARD;
                 }else{

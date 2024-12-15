@@ -7,7 +7,6 @@ import jakarta.servlet.annotation.WebListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 @WebListener
 public class ServletContextListenerImpl implements ServletContextListener {
 

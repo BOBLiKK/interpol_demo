@@ -23,12 +23,10 @@ public class RegisterUserCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-
         String login = request.getParameter(LOGIN);
         String password = request.getParameter(PASSWORD);
         String page;
         Map<String, String> validationErrors = validateInput(login, password);
-
         if (!validationErrors.isEmpty()) {
             request.setAttribute(VALIDATION_ERRORS, validationErrors);
             return  REGISTER_USER;
@@ -44,8 +42,7 @@ public class RegisterUserCommand implements Command {
                 page = REGISTER_USER;
             }
         } catch (ServiceException e) {
-            logger.fatal("Registration Error. ");
-            throw new CommandException(e);
+            throw new CommandException("Registration Error. ", e);
         }
         return page;
     }

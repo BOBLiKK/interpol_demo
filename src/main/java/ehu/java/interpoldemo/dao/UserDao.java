@@ -1,5 +1,4 @@
 package ehu.java.interpoldemo.dao;
-
 import ehu.java.interpoldemo.exception.DaoException;
 import ehu.java.interpoldemo.model.User;
 

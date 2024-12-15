@@ -38,12 +38,10 @@ public class Controller extends HttpServlet {
             request.setAttribute(RESPONSE, response);
             Command command = CommandType.define(commandStr);
             String page = command.execute(request);
-
-            //todo
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals(USER) || cookie.getName().equals(ROLE)) {
+                    if (cookie.getName().equals(USER) || cookie.getName().equals(ROLE) || cookie.getName().equals(LANG)) {
                         logger.info("Cookie Name: " + cookie.getName()
                                 + ", Cookie Value: " + cookie.getValue());
                     }

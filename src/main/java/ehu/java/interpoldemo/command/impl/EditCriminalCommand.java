@@ -7,7 +7,6 @@ import ehu.java.interpoldemo.model.Criminal;
 import ehu.java.interpoldemo.service.CriminalService;
 import ehu.java.interpoldemo.service.impl.CriminalServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
@@ -43,13 +42,10 @@ public class EditCriminalCommand implements Command {
             } else {
                 request.setAttribute(MESSAGE, CRIMINAL_NOT_UPDATED);
             }
-
         } catch (NumberFormatException e) {
-            logger.error("Invalid input format.", e);
-            throw new CommandException("Invalid input format.", e);
+            throw new CommandException("Invalid input format. ", e);
         } catch (ServiceException e) {
-            logger.error("Error updating criminal.", e);
-            throw new CommandException("Failed to update criminal.", e);
+            throw new CommandException("Failed to update criminal. ", e);
         }
         return ADMIN_DASHBOARD;
     }

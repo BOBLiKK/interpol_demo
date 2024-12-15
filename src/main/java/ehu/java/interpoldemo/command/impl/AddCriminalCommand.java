@@ -6,7 +6,6 @@ import ehu.java.interpoldemo.exception.ServiceException;
 import ehu.java.interpoldemo.service.CriminalService;
 import ehu.java.interpoldemo.service.impl.CriminalServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
@@ -36,8 +35,7 @@ public class AddCriminalCommand implements Command {
                 request.setAttribute(MESSAGE, CRIMINAL_NOT_ADDED);
             }
         } catch (ServiceException e) {
-            logger.info("Error adding criminal to the database.");
-            throw new CommandException(e);
+            throw new CommandException( "Error adding criminal to the database. ", e);
         }
         return ADMIN_DASHBOARD;
     }

@@ -1,17 +1,12 @@
 package ehu.java.interpoldemo.dao;
-
 import ehu.java.interpoldemo.dao.connection.ConnectionPool;
-import ehu.java.interpoldemo.dao.impl.UserDaoImpl;
 import ehu.java.interpoldemo.model.AbstractModel;
 import ehu.java.interpoldemo.exception.DaoException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
-
 
 public abstract class BaseDao <T extends AbstractModel>{
 
@@ -27,13 +22,6 @@ public abstract class BaseDao <T extends AbstractModel>{
             prepareInsertStatement(preparedStatement, model);
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
-            logger.info("____________________________________________________");
-            logger.error(e);
-            logger.error(e.getCause());
-            logger.error(e.getMessage());
-            logger.error(e.getSQLState());
-            logger.error(e.getErrorCode());
-            logger.info("____________________________________________________");
             throw new DaoException("Error inserting the model.");
         }
     }
@@ -67,6 +55,4 @@ public abstract class BaseDao <T extends AbstractModel>{
             throw new DaoException("Error deleting the model.", e);
         }
     }
-
-    public abstract List<T> findAll() throws DaoException;
 }

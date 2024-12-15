@@ -130,11 +130,4 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
     protected void prepareDeleteStatement(PreparedStatement preparedStatement, User user) throws SQLException {
         preparedStatement.setInt(1, user.getId());
     }
-
-    //todo
-
-    @Override
-    public List findAll() throws DaoException {
-        return List.of();
-    }
 }

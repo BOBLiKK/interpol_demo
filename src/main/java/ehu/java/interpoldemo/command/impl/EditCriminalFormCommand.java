@@ -21,7 +21,7 @@ public class EditCriminalFormCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         String idParam = request.getParameter(ID);
         if (idParam == null || idParam.isEmpty()) {
-            throw new CommandException("Criminal ID is missing.");
+            throw new CommandException("Criminal ID is missing. ");
         }
         try {
             int criminalId = Integer.parseInt(idParam);
@@ -31,11 +31,9 @@ public class EditCriminalFormCommand implements Command {
             }
             request.setAttribute(CRIMINAL, criminal);
         } catch (NumberFormatException e) {
-            logger.error("Invalid ID format: " + idParam, e);
-            throw new CommandException("Invalid criminal ID format.", e);
+            throw new CommandException("Invalid criminal ID format. ", e);
         } catch (ServiceException e) {
-            logger.error("Error fetching criminal data for ID: " + idParam, e);
-            throw new CommandException("Failed to fetch criminal data.", e);
+            throw new CommandException("Failed to fetch criminal data. ", e);
         }
         return EDIT_CRIMINAL;
     }

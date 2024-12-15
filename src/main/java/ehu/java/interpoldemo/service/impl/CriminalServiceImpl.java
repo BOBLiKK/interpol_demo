@@ -18,7 +18,6 @@ public class CriminalServiceImpl implements CriminalService {
     private final CriminalDao criminalDao = new CriminalDaoImpl();
     private static final Logger logger = LogManager.getLogger(CriminalServiceImpl.class);
 
-    //todo
     @Override
     public boolean addCriminal(String name, String surname, LocalDate dateOfBirth, String citizenship, String description, double reward) throws ServiceException {
         boolean addedSuccessfully = false;

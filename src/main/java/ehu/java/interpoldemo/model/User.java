@@ -4,7 +4,6 @@ import java.util.StringJoiner;
 
 public class User extends AbstractModel{
 
-
     private User(UserBuilder builder) {
         this.id = builder.id;
         this.login = builder.login;
@@ -13,13 +12,11 @@ public class User extends AbstractModel{
         this.userRole = builder.userRole;
     }
 
-
     private int id;
     private String login;
     private String password;
     private String email;
     private UserRole userRole;
-
 
     public int getId() {
         return id;
@@ -34,7 +31,6 @@ public class User extends AbstractModel{
     public UserRole getUserRole() {
         return userRole;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -59,10 +55,8 @@ public class User extends AbstractModel{
                 .toString();
     }
 
-
     public static class UserBuilder {
 
-        //todo
         private int id;
         private String login;
         private String password;

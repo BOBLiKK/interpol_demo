@@ -26,9 +26,7 @@ public class SessionTimeoutFilter implements Filter {
         HttpSession session = httpRequest.getSession(false);
         if(session == null) {
             request.getRequestDispatcher(INDEX_PAGE).forward(request, response);
-            logger.info("---------------Forwarded");
         }else{
-            logger.info("---------------Session is active. Timeout not yet reached.");
             chain.doFilter(request, response);
         }
     }

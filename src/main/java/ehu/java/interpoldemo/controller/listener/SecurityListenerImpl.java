@@ -25,7 +25,7 @@ public class SecurityListenerImpl implements HttpSessionListener, HttpSessionAtt
 
     @Override
     public void attributeRemoved(HttpSessionBindingEvent event) {
-        logger.info("User '{}' logged out. Session ID: {}", event.getValue(), event.getSession().getId());
+        logger.info("Attribute '{}' removed. Session ID: {}", event.getValue(), event.getSession().getId());
     }
 
     @Override

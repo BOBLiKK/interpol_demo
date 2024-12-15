@@ -25,24 +25,18 @@ public class RegisterUserWithEmailCommand implements Command {
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
         String page;
-
         Map<String, String> validationErrors = validateInput(email, password);
-
         if (!validationErrors.isEmpty()) {
             request.setAttribute(VALIDATION_ERRORS, validationErrors);
             return REGISTER_USER;
         }
-
         try {
-            boolean registrationSuccessful = userService.registerUserWithEmail(email, password);
-
-            if (registrationSuccessful) {
+            if (userService.registerUserWithEmail(email, password)) {
                 request.setAttribute(MESSAGE, REGISTRATION_SUCCESSFUL);
                 page = LOGIN_PAGE;
             } else {
                 page = REGISTER_USER;
             }
-
         } catch (ServiceException e) {
             throw new CommandException("Registration with email failed.", e);
         }

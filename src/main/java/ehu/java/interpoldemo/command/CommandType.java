@@ -1,7 +1,6 @@
 package ehu.java.interpoldemo.command;
 
 import ehu.java.interpoldemo.command.impl.*;
-import java.util.logging.Logger;
 
 public enum CommandType {
 

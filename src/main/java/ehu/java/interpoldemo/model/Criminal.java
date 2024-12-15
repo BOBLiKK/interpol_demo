@@ -52,7 +52,6 @@ public class Criminal extends AbstractModel {
         return isArrested;
     }
 
-    //todo
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,7 +60,6 @@ public class Criminal extends AbstractModel {
         return id == criminal.id && Double.compare(reward, criminal.reward) == 0 && isArrested == criminal.isArrested && Objects.equals(name, criminal.name) && Objects.equals(surname, criminal.surname) && Objects.equals(dateOfBirth, criminal.dateOfBirth) && Objects.equals(citizenship, criminal.citizenship) && Objects.equals(description, criminal.description);
     }
 
-    //todo
     @Override
     public int hashCode() {
         return Objects.hash(id, name, surname, dateOfBirth, citizenship, description, reward, isArrested);
@@ -80,7 +78,6 @@ public class Criminal extends AbstractModel {
                 .add("isArrested=" + isArrested)
                 .toString();
     }
-    //todo
 
     public static class CriminalBuilder{
         private int id;

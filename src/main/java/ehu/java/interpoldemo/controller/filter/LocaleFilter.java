@@ -6,9 +6,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.util.Locale;
+import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
 @WebFilter("/*")
 public class LocaleFilter implements Filter {
@@ -20,17 +20,13 @@ public class LocaleFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
-
-        String langParam = httpRequest.getParameter("lang");
-        if (langParam != null && !langParam.equals(session.getAttribute("locale"))) {
-            logger.info("Language from request: " + langParam);
-            session.setAttribute("locale", langParam);
+        String langParam = httpRequest.getParameter(LANG);
+        if (langParam != null && !langParam.equals(session.getAttribute(LOCALE))) {
+            session.setAttribute(LOCALE, langParam);
         }
-
-        if (session.getAttribute("locale") == null) {
-            session.setAttribute("locale", Locale.ENGLISH.getLanguage());
+        if (session.getAttribute(LOCALE) == null) {
+            session.setAttribute(LOCALE, Locale.ENGLISH.getLanguage());
         }
-
         chain.doFilter(request, response);
     }
 }

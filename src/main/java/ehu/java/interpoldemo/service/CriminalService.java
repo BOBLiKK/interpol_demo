@@ -2,7 +2,6 @@ package ehu.java.interpoldemo.service;
 
 import ehu.java.interpoldemo.exception.ServiceException;
 import ehu.java.interpoldemo.model.Criminal;
-
 import java.time.LocalDate;
 import java.util.List;
 

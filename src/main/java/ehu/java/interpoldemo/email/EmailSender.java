@@ -1,5 +1,4 @@
 package ehu.java.interpoldemo.email;
-
 import java.util.Properties;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
@@ -8,6 +7,8 @@ import jakarta.mail.Transport;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class EmailSender {
 
@@ -16,6 +17,7 @@ public class EmailSender {
     private String mailSubject;
     private String mailText;
     private Properties properties;
+    private static final Logger logger = LogManager.getLogger(EmailSender.class);
 
     public EmailSender(String sendToEmail, String mailSubject, String mailText, Properties props) {
         this.sendToEmail = sendToEmail;
@@ -29,9 +31,9 @@ public class EmailSender {
             initMessage();
             Transport.send(message);
         } catch (AddressException e) {
-            System.err.println("Invalid address: " + sendToEmail + " " + e);
+            logger.error("Invalid address: " + sendToEmail + " " + e);
         } catch (MessagingException e) {
-            System.err.println("Error generating or sending message: " + e);
+            logger.error("Error generating or sending message: " + e);
         }
     }
 

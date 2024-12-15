@@ -20,16 +20,11 @@ public class PageAttributeConstant {
             "a number, and a special character.";
     public static final String INVALID_EMAIL_VALUE = "Invalid email value";
 
-
     public static final String CRIMINAL_UPDATED = "Criminal updated successfully.";
     public static final String CRIMINAL_NOT_UPDATED = "Failed to update criminal.";
 
     public static final String CRIMINAL_DELETED = "Criminal was deleted successfully.";
     public static final String CRIMINAL_NOT_DELETED = "Criminal was not deleted.";
 
-
-
-    public static final String USER_SESSION = "userSession";
-    public static final String USER_COOKIE = "userCookie";
     public static final String RESPONSE = "response";
 }
