@@ -22,7 +22,7 @@ public abstract class BaseDao <T extends AbstractModel>{
             prepareInsertStatement(preparedStatement, model);
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new DaoException("Error inserting the model.");
+            throw new DaoException("Error inserting the model." + e );
         }
     }
 

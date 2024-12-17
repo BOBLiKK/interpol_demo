@@ -76,6 +76,9 @@
         <div class="navbar-nav ms-auto">
             <a href="${pageContext.request.contextPath}/controller?command=add_criminal_form&admin=true" class="nav-link"><fmt:message bundle="${buttons}" key="button.add_criminal"/></a>
             <a href="${pageContext.request.contextPath}/controller?command=view_criminal_list&admin=true" class="nav-link"><fmt:message bundle="${buttons}" key="button.view_criminals"/></a>
+            <a href="${pageContext.request.contextPath}/controller?command=view_requests" class="nav-link">
+                <fmt:message bundle="${buttons}" key="button.view_requests"/>
+            </a>
         </div>
     </div>
 </nav>

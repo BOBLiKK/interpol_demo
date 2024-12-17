@@ -64,6 +64,9 @@
     <div class="body">
         <h5><fmt:message bundle="${messages}" key="message.hello"/> , ${user}!</h5>
         <a href="${pageContext.request.contextPath}/controller?command=view_criminal_list&admin=false" class="btn btn-primary btn-lg mt-3"><fmt:message bundle="${buttons}" key="button.view_criminals"/></a>
+        <a href="${pageContext.request.contextPath}/controller?command=add_request_form" class="btn btn-success btn-lg mt-3">
+            <fmt:message bundle="${buttons}" key="button.add_request"/>
+        </a>
         <a href="${pageContext.request.contextPath}/controller?command=logout" class="btn btn-danger btn-lg mt-3"><fmt:message bundle="${buttons}" key="button.logout"/></a>
     </div>
 </div>

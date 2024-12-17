@@ -19,6 +19,8 @@ public class PageAttributeConstant {
             "Must be 8-12 characters, including upper and lower case, " +
             "a number, and a special character.";
     public static final String INVALID_EMAIL_VALUE = "Invalid email value";
+    public static final String REQUEST_ADDED_SUCCESFULLY = "Request added successfully!";
+    public static final String REQUEST_NOT_ADDED = "Error adding request.";
 
     public static final String CRIMINAL_UPDATED = "Criminal updated successfully.";
     public static final String CRIMINAL_NOT_UPDATED = "Failed to update criminal.";

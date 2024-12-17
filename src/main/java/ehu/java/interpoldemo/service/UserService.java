@@ -10,6 +10,7 @@ public interface UserService {
     boolean sendEmail(String email) throws ServiceException;
     boolean deleteUser(int id) throws ServiceException;
     boolean checkIfExists(String login) throws ServiceException;
+    int findUserId(String login) throws ServiceException;
     String findRole(String login) throws ServiceException;
     User findUserById(int id) throws ServiceException;
 

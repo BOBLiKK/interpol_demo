@@ -14,6 +14,11 @@ public enum CommandType {
     DELETE_CRIMINAL(new DeleteCriminalCommand()),
     ADD_CRIMINAL_FORM (new AddCriminalFormCommand()),
     VIEW_CRIMINAL_LIST (new ViewCriminalListCommand()),
+    ADD_REQUEST(new AddRequestCommand()),
+    ADD_REQUEST_FORM (new AddRequestFormCommand()),
+    VIEW_REQUEST_LIST (new ViewRequestListCommand()),
+    APPROVE_REQUEST(new ApproveRequestCommand()),
+    DECLINE_REQUEST(new DeclineRequestCommand()),
     DEFAULT(new DefaultCommand());
     Command command;
 

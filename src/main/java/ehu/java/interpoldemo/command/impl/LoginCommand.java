@@ -28,6 +28,8 @@ public class LoginCommand implements Command {
                HttpSession session = request.getSession(true);
                 String role = userService.findRole(login);
                 String language = (String) session.getAttribute(LOCALE);
+                int userId = userService.findUserId(login);
+                session.setAttribute(USER_ID, userId);
                 session.setAttribute(USER, login);
                 session.setAttribute(ROLE, role);
                 Cookie userCookie = new Cookie(USER, login);

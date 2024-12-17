@@ -12,6 +12,8 @@ public final class PageNameConstant {
     //GUEST pages
     public static final String MAIN_PAGE = "pages/guest/main.jsp";
     public static final String GUEST_CRIMINAL_LIST = "pages/guest/guest_criminal_list.jsp";
+    public static final String ADD_REQUEST = "pages/guest/add_request.jsp";
+
     //ADMIN pages
     public static final String ADMIN_DASHBOARD = "pages/admin/dashboard.jsp";
     public static final String ADD_CRIMINAL = "pages/admin/add_criminal.jsp";

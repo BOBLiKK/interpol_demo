@@ -28,6 +28,12 @@ public final class ParameterNameConstant {
     public static final String USER = "user";
     public static final String NEW_USER = "newUser";
     public static final String COMMAND = "command";
+    public static final String REQUEST_ID = "request_id";
+    public static final String USER_ID = "user_id";
+    public static final String COMMENT = "comment";
+    public static final String STATUS = "status";
+
+
 
     //user roles
     public static final String ROLE = "role";

@@ -179,6 +179,9 @@
         inputField.replaceWith(select);
     });
 </script>
+<div class="btn-container">
+    <button onclick="history.back()" class="btn-back"><fmt:message bundle="${buttons}" key="button.back"/></button>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
