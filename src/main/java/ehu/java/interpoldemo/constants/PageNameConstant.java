@@ -19,6 +19,7 @@ public final class PageNameConstant {
     public static final String ADD_CRIMINAL = "pages/admin/add_criminal.jsp";
     public static final String ADMIN_CRIMINAL_LIST = "pages/admin/admin_criminal_list.jsp";
     public static final String EDIT_CRIMINAL = "pages/admin/edit_criminal.jsp";
+    public static final String REQUEST_LIST = "pages/admin/request_list.jsp";
 
     //Error pages
     public static final String ERROR_404_PAGE = "pages/error/404.jsp";

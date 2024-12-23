@@ -7,5 +7,6 @@ public interface UserDao {
     User findUserById(int id) throws DaoException;
     User findUserByLogin(String login) throws DaoException;
     String findRoleByLogin(String login) throws DaoException;
+    int findUserIdByLogin(String login) throws DaoException;
     boolean update(User user) throws DaoException;
 }

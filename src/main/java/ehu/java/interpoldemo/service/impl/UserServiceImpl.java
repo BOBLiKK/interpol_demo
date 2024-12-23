@@ -118,8 +118,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public int findUserId(String login) throws ServiceException {
         try{
-            User user = userDao.findUserByLogin(login);
-            return user.getId();
+            logger.info("User found id : " + userDao.findUserIdByLogin(login));
+            return userDao.findUserIdByLogin(login);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

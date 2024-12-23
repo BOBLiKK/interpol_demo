@@ -45,7 +45,7 @@ public class RequestServiceImpl implements RequestService {
         }
     }
 
-    public List<Request> getAllRequests() throws ServiceException {
+    public List<Request> findAllRequests() throws ServiceException {
         try {
             return requestDao.findAll();
         } catch (DaoException e) {

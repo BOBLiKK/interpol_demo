@@ -9,5 +9,5 @@ public interface RequestService {
     public boolean updateRequestStatus(int requestId, String status) throws ServiceException;
     public Request getRequestById(int requestId) throws ServiceException;
     public List<Request> getRequestsByUserId(int userId) throws ServiceException;
-    public List<Request> getAllRequests() throws ServiceException;
+    public List<Request> findAllRequests() throws ServiceException;
 }

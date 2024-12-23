@@ -9,16 +9,18 @@ import ehu.java.interpoldemo.model.Status;
 import ehu.java.interpoldemo.service.RequestService;
 import ehu.java.interpoldemo.service.impl.RequestServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import static ehu.java.interpoldemo.constants.PageAttributeConstant.*;
 import static ehu.java.interpoldemo.constants.PageNameConstant.*;
 import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
-//todo
 
 public class AddRequestCommand implements Command {
 
     private final RequestService requestService = new RequestServiceImpl();
+    private static final Logger logger = LogManager.getLogger(AddRequestCommand.class);
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
@@ -31,10 +33,9 @@ public class AddRequestCommand implements Command {
         String citizenship = request.getParameter(CITIZENSHIP);
         String description = request.getParameter(DESCRIPTION);
         String reward = request.getParameter(REWARD);
-        String comments = request.getParameter(COMMENT);
+        String comment = request.getParameter(COMMENT);
         try {
             int userId = (int) request.getSession().getAttribute(USER_ID);
-
             Criminal criminal = new Criminal.CriminalBuilder(name, surname)
                     .setDateOfBirth(dateOfBirth)
                     .setCitizenship(citizenship)
@@ -45,7 +46,7 @@ public class AddRequestCommand implements Command {
             Request newRequest = new Request.RequestBuilder()
                     .setUserId(userId)
                     .setCriminal(criminal)
-                    .setComment(comments)
+                    .setComment(comment)
                     .setStatus(Status.PENDING)
                     .build();
 
@@ -55,7 +56,7 @@ public class AddRequestCommand implements Command {
                 request.setAttribute(MESSAGE, REQUEST_NOT_ADDED);
             }
         } catch (NumberFormatException | ServiceException e) {
-            throw new CommandException(e.getMessage());
+            throw new CommandException(e.getMessage() + e.getCause() + e.getStackTrace());
         }
         return MAIN_PAGE;
     }

@@ -7,7 +7,7 @@ import ehu.java.interpoldemo.model.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.sql.*;
-import java.util.List;
+
 import static ehu.java.interpoldemo.constants.DaoConstant.*;
 import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
@@ -96,6 +96,24 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
             throw new DaoException("Error fetching user role from database.", e);
         }
         return role;
+    }
+
+    @Override
+    public int findUserIdByLogin(String login) throws DaoException {
+        int userId = 0;
+        try(
+                Connection connection = ConnectionPool.getInstance().getConnection();
+                PreparedStatement  preparedStatement = connection.prepareStatement(SELECT_USER_ID_BY_LOGIN)
+        ){
+            preparedStatement.setString(1,login);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                userId = resultSet.getInt(ID);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error finding user id from database.", e);
+        }
+        return userId;
     }
 
     @Override

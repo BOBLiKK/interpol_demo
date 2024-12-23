@@ -57,7 +57,7 @@ public class Request extends AbstractModel {
             return this;
         }
 
-        public RequestBuilder setComment(String comments) {
+        public RequestBuilder setComment(String comment) {
             this.comment = comment;
             return this;
         }
@@ -78,7 +78,7 @@ public class Request extends AbstractModel {
                 "requestId=" + requestId +
                 ", userId=" + userId +
                 ", criminal=" + criminal +
-                ", comments='" + comment + '\'' +
+                ", comment='" + comment + '\'' +
                 ", status=" + status +
                 '}';
     }

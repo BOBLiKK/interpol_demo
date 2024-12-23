@@ -27,14 +27,15 @@ public class RequestDaoImpl extends BaseDao<Request> implements RequestDao {
 
     @Override
     protected void prepareInsertStatement(PreparedStatement preparedStatement, Request request) throws SQLException {
-        preparedStatement.setString(1, request.getCriminal().getName());
-        preparedStatement.setString(2, request.getCriminal().getSurname());
-        preparedStatement.setDate(3, Date.valueOf(request.getCriminal().getDateOfBirth()));
-        preparedStatement.setString(4, request.getCriminal().getCitizenship());
-        preparedStatement.setString(5, request.getCriminal().getDescription());
-        preparedStatement.setDouble(6, request.getCriminal().getReward());
-        preparedStatement.setString(7, request.getComment());
-        preparedStatement.setString(8, request.getStatus().getStatus());
+        preparedStatement.setInt(1, request.getUserId());
+        preparedStatement.setString(2, request.getCriminal().getName());
+        preparedStatement.setString(3, request.getCriminal().getSurname());
+        preparedStatement.setDate(4, Date.valueOf(request.getCriminal().getDateOfBirth()));
+        preparedStatement.setString(5, request.getCriminal().getCitizenship());
+        preparedStatement.setString(6, request.getCriminal().getDescription());
+        preparedStatement.setDouble(7, request.getCriminal().getReward());
+        preparedStatement.setString(8, request.getComment());
+        preparedStatement.setString(9, request.getStatus().getStatus());
     }
 
 

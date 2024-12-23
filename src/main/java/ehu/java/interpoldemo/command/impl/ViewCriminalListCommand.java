@@ -32,7 +32,7 @@ public class ViewCriminalListCommand implements Command {
             }
         } catch (ServiceException e) {
             logger.info("Error retrieving criminals list. ");
-            throw new CommandException( e);
+            throw new CommandException(e);
         }
     }
 }
