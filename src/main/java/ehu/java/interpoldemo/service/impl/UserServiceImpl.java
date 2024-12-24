@@ -91,15 +91,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean deleteUser(int id) throws ServiceException {
-        boolean deletedSuccessfully = false;
         try{
             User user = findUserById(id);
-            deletedSuccessfully = userDaoImpl.delete(user);
+            return userDaoImpl.delete(user);
         } catch(DaoException e){
-            logger.error("Error deleting criminal on service level");
             throw new ServiceException(e);
         }
-        return deletedSuccessfully;
     }
 
     @Override
@@ -118,7 +115,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public int findUserId(String login) throws ServiceException {
         try{
-            logger.info("User found id : " + userDao.findUserIdByLogin(login));
             return userDao.findUserIdByLogin(login);
         } catch (DaoException e) {
             throw new ServiceException(e);

@@ -20,44 +20,46 @@ public class CriminalServiceImpl implements CriminalService {
 
     @Override
     public boolean addCriminal(String name, String surname, LocalDate dateOfBirth, String citizenship, String description, double reward) throws ServiceException {
-        boolean addedSuccessfully = false;
         try{
             Criminal criminal = new Criminal.CriminalBuilder(name, surname).
                     setDateOfBirth(dateOfBirth).
                     setCitizenship(citizenship).
                     setDescription(description).
                     setReward(reward).build();
-            addedSuccessfully = criminalDaoImpl.insert(criminal);
+            return criminalDaoImpl.insert(criminal);
         } catch (DaoException e){
-            logger.error("Error saving criminal on service level");
             throw new ServiceException(e);
         }
-        return addedSuccessfully;
+    }
+
+    @Override
+    public boolean addCriminal(Criminal criminal) throws ServiceException {
+        try{
+            return criminalDaoImpl.insert(criminal);
+        } catch (DaoException e){
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public boolean editCriminal(Criminal criminal) throws ServiceException {
-        boolean editedSuccessfully = false;
         try{
-            editedSuccessfully = criminalDaoImpl.update(criminal);
+            return criminalDaoImpl.update(criminal);
         } catch (DaoException e){
             logger.error("Error editing criminal on service level");
             throw new ServiceException(e);
         }
-        return editedSuccessfully;
     }
 
     @Override
     public boolean deleteCriminal(int id) throws ServiceException {
-        boolean deletedSuccessfully = false;
         try{
             Criminal criminal = findCriminalById(id);
-            deletedSuccessfully = criminalDaoImpl.delete(criminal);
+            return criminalDaoImpl.delete(criminal);
         } catch(DaoException e){
             logger.error("Error deleting criminal on service level");
             throw new ServiceException(e);
         }
-        return deletedSuccessfully;
     }
 
 

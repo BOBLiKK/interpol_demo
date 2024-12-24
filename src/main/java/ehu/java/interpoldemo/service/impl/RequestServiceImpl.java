@@ -29,7 +29,7 @@ public class RequestServiceImpl implements RequestService {
         }
     }
 
-    public Request getRequestById(int requestId) throws ServiceException {
+    public Request findRequestById(int requestId) throws ServiceException {
         try {
             return requestDao.findById(requestId);
         } catch (DaoException e) {
@@ -37,7 +37,7 @@ public class RequestServiceImpl implements RequestService {
         }
     }
 
-    public List<Request> getRequestsByUserId(int userId) throws ServiceException {
+    public List<Request> findRequestsByUserId(int userId) throws ServiceException {
         try {
             return requestDao.findByUserId(userId);
         } catch (DaoException e) {

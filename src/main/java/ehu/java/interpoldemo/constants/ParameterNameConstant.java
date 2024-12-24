@@ -40,6 +40,11 @@ public final class ParameterNameConstant {
     public static final String ADMIN = "ADMIN";
     public static final String GUEST = "GUEST";
 
+
+    //request status
+    public static final String REJECTED = "REJECTED";
+    public static final String APPROVED = "APPROVED";
+
     public static final String DATE_OF_BIRTH_DAO = "date_of_birth";
 
 }

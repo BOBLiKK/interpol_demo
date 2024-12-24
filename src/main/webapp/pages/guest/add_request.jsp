@@ -13,6 +13,7 @@
 <fmt:setBundle basename="localization.messages" var="messages" />
 <fmt:setBundle basename="localization.titles" var="titles"/>
 <fmt:setBundle basename="localization.tables" var="tables"/>
+<%@ taglib uri="http://interpoldemo/custom" prefix="custom" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -105,7 +106,7 @@
 
         <div class="mb-3">
             <label for="citizenship" class="form-label"><fmt:message bundle="${tables}" key="table.citizenship"/></label>
-            <input type="text" class="form-control" id="citizenship" name="citizenship" required/>
+            <custom:countrySelect/>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label"><fmt:message bundle="${tables}" key="table.description"/></label>

@@ -7,7 +7,7 @@ import java.util.List;
 public interface RequestService {
     public boolean createRequest(Request request) throws ServiceException;
     public boolean updateRequestStatus(int requestId, String status) throws ServiceException;
-    public Request getRequestById(int requestId) throws ServiceException;
-    public List<Request> getRequestsByUserId(int userId) throws ServiceException;
+    public Request findRequestById(int requestId) throws ServiceException;
+    public List<Request> findRequestsByUserId(int userId) throws ServiceException;
     public List<Request> findAllRequests() throws ServiceException;
 }

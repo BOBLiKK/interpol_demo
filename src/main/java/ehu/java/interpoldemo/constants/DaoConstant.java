@@ -12,7 +12,7 @@ public final class DaoConstant {
     public static final String SELECT_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
     public static final String SELECT_ROLE_BY_LOGIN = "SELECT role FROM users WHERE login = ?";
     public static final String SELECT_CRIMINAL_BY_ID = "SELECT * FROM criminals WHERE id = ?";
-    public static final String SELECT_REQUEST_BY_ID = "SELECT * FROM requests WHERE id = ?";
+    public static final String SELECT_REQUEST_BY_ID = "SELECT * FROM requests WHERE request_id = ?";
     public static final String SELECT_REQUEST_BY_USER_ID = "SELECT * FROM requests WHERE user_id = ?";
     public static final String SELECT_ALL_REQUESTS = "SELECT * FROM requests";
 

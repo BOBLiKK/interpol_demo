@@ -78,7 +78,7 @@
           <button type="submit" class="btn-approve"><fmt:message bundle="${buttons}" key="button.approve"/></button>
         </form>
         <form action="controller" method="post" style="display:inline-block;">
-          <input type="hidden" name="command" value="reject_request" />
+          <input type="hidden" name="command" value="decline_request" />
           <input type="hidden" name="id" value="${request.requestId}" />
           <button type="submit" class="btn-reject"><fmt:message bundle="${buttons}" key="button.reject"/></button>
         </form>
