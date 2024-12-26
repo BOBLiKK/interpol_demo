@@ -6,9 +6,15 @@ import ehu.java.interpoldemo.exception.ServiceException;
 import ehu.java.interpoldemo.model.Criminal;
 import ehu.java.interpoldemo.service.CriminalService;
 import ehu.java.interpoldemo.service.impl.CriminalServiceImpl;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import static ehu.java.interpoldemo.constants.PageNameConstant.ADMIN_DASHBOARD;
 import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
@@ -29,6 +35,17 @@ public class EditCriminalCommand implements Command {
             String citizenship = request.getParameter(CITIZENSHIP);
             String description = request.getParameter(DESCRIPTION);
             double reward = Double.parseDouble(request.getParameter(REWARD));
+            byte[] image = null;
+
+            // Получение изображения
+            Part filePart = request.getPart(IMAGE);
+            if (filePart != null && filePart.getSize() > 0) {
+                try (InputStream inputStream = filePart.getInputStream()) {
+                    image = inputStream.readAllBytes();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
             Criminal criminal = new Criminal.CriminalBuilder(name, surname)
                     .setId(criminalId)
@@ -36,7 +53,9 @@ public class EditCriminalCommand implements Command {
                     .setCitizenship(citizenship)
                     .setDescription(description)
                     .setReward(reward)
+                    .setImage(image)
                     .build();
+
             if (criminalService.editCriminal(criminal)) {
                 request.setAttribute(MESSAGE, CRIMINAL_UPDATED);
             } else {
@@ -44,7 +63,7 @@ public class EditCriminalCommand implements Command {
             }
         } catch (NumberFormatException e) {
             throw new CommandException("Invalid input format. ", e);
-        } catch (ServiceException e) {
+        } catch (ServiceException | IOException | ServletException e) {
             throw new CommandException("Failed to update criminal. ", e);
         }
         return ADMIN_DASHBOARD;

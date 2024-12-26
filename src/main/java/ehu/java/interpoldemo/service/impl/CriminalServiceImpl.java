@@ -19,13 +19,14 @@ public class CriminalServiceImpl implements CriminalService {
     private static final Logger logger = LogManager.getLogger(CriminalServiceImpl.class);
 
     @Override
-    public boolean addCriminal(String name, String surname, LocalDate dateOfBirth, String citizenship, String description, double reward) throws ServiceException {
+    public boolean addCriminal(String name, String surname, LocalDate dateOfBirth, String citizenship, String description, double reward, byte[] image) throws ServiceException {
         try{
             Criminal criminal = new Criminal.CriminalBuilder(name, surname).
                     setDateOfBirth(dateOfBirth).
                     setCitizenship(citizenship).
                     setDescription(description).
-                    setReward(reward).build();
+                    setReward(reward).
+                    setImage(image).build();
             return criminalDaoImpl.insert(criminal);
         } catch (DaoException e){
             throw new ServiceException(e);

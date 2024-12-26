@@ -41,6 +41,13 @@
     tr:hover {
       background-color: #f1f1f1;
     }
+    img.thumbnail {
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    }
+
   </style>
 </head>
 <body>
@@ -55,6 +62,7 @@
     <th><fmt:message bundle="${tables}" key="table.description"/></th>
     <th><fmt:message bundle="${tables}" key="table.reward"/></th>
     <th><fmt:message bundle="${tables}" key="table.arrested"/></th>
+    <th><fmt:message bundle="${tables}" key="table.image"/></th>
     <th><fmt:message bundle="${tables}" key="table.actions"/></th>
   </tr>
   </tr>
@@ -76,6 +84,10 @@
           <fmt:message bundle="${messages}" key="message.no"/>
         </c:otherwise>
       </c:choose>
+      </td>
+      <td>
+        <c:if test="${not empty criminal.image}">
+        <img src="data:image/png;base64,${fn:escapeXml(criminal.image)}" alt="image" class="thumbnail"> </c:if>
       </td>
       <td>
         <form action="controller" method="post" style="display:inline-block;">

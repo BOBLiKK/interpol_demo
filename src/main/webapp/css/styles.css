@@ -57,3 +57,10 @@ input[type="submit"]:hover {
     color: green;
     font-size: 14px;
 }
+
+.status-approved {
+    background-color: #08ee3f !important;/* Красный для rejected */
+}
+.status-rejected {
+    background-color: #f1091e !important; /* Зеленый для approved */
+}

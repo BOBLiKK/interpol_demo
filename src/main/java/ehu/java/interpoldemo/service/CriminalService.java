@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface CriminalService {
-    boolean addCriminal(String name, String surname, LocalDate dateOfBirth, String citizenship, String description, double reward) throws ServiceException;
+    boolean addCriminal(String name, String surname, LocalDate dateOfBirth, String citizenship, String description, double reward, byte[] image) throws ServiceException;
     boolean addCriminal(Criminal criminal) throws ServiceException;
     boolean editCriminal(Criminal criminal) throws ServiceException;
     boolean deleteCriminal(int id) throws ServiceException;

@@ -35,13 +35,15 @@ public class CriminalDaoImpl extends BaseDao<Criminal> implements CriminalDao {
                 String description = resultSet.getString(DESCRIPTION);
                 double reward = resultSet.getDouble(REWARD);
                 boolean isArrested = resultSet.getBoolean(IS_ARRESTED);
+                byte[] image = resultSet.getBytes(IMAGE);
                 criminal = new Criminal.CriminalBuilder(name, surname).
                         setId(id).
                         setDateOfBirth(dateOfBirth).
                         setCitizenship(citizenship).
                         setDescription(description).
                         setReward(reward).
-                        setIsArrested(isArrested).build();
+                        setIsArrested(isArrested).
+                        setImage(image).build();
             }
         } catch (SQLException e) {
             logger.error("Error retrieving criminal with ID: " + id, e);
@@ -67,13 +69,15 @@ public class CriminalDaoImpl extends BaseDao<Criminal> implements CriminalDao {
                 String description = resultSet.getString(DESCRIPTION);
                 double reward = resultSet.getDouble(REWARD);
                 boolean isArrested = resultSet.getBoolean(IS_ARRESTED);
+                byte[] image = resultSet.getBytes(IMAGE);
                 Criminal criminal = new Criminal.CriminalBuilder(name, surname).
                 setId(id).
                 setDateOfBirth(dateOfBirth).
                 setCitizenship(citizenship).
                 setDescription(description).
                 setReward(reward).
-                setIsArrested(isArrested).build();
+                setIsArrested(isArrested).
+                setImage(image).build();
                 criminals.add(criminal);
             }
         } catch (SQLException e) {
@@ -96,6 +100,7 @@ public class CriminalDaoImpl extends BaseDao<Criminal> implements CriminalDao {
         preparedStatement.setString(4, criminal.getCitizenship());
         preparedStatement.setString(5, criminal.getDescription());
         preparedStatement.setDouble(6, criminal.getReward());
+        preparedStatement.setBytes(7, criminal.getImage());
     }
 
     @Override
@@ -111,8 +116,9 @@ public class CriminalDaoImpl extends BaseDao<Criminal> implements CriminalDao {
         preparedStatement.setString(4, criminal.getCitizenship());
         preparedStatement.setString(5, criminal.getDescription());
         preparedStatement.setDouble(6, criminal.getReward());
-        preparedStatement.setBoolean(7, criminal.isArrested());
-        preparedStatement.setInt(8, criminal.getId());
+        preparedStatement.setBytes(7, criminal.getImage());
+        preparedStatement.setBoolean(8, criminal.isArrested());
+        preparedStatement.setInt(9, criminal.getId());
     }
 
     @Override

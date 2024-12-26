@@ -1,11 +1,11 @@
 package ehu.java.interpoldemo.model;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Criminal extends AbstractModel {
 
-    //todo citizenship should be enum
 
     public Criminal(CriminalBuilder builder) {
         this.id = builder.id;
@@ -16,6 +16,7 @@ public class Criminal extends AbstractModel {
         this.description = builder.description;
         this.reward = builder.reward;
         this.isArrested = builder.isArrested;
+        this.image = builder.image;
     }
 
     private int id;
@@ -26,6 +27,7 @@ public class Criminal extends AbstractModel {
     private String description;
     private double reward;
     private boolean isArrested;
+    private byte[] image;
 
     public int getId() {
         return id;
@@ -51,18 +53,19 @@ public class Criminal extends AbstractModel {
     public boolean isArrested() {
         return isArrested;
     }
+    public byte[] getImage() {return image;}
+
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Criminal criminal = (Criminal) o;
-        return id == criminal.id && Double.compare(reward, criminal.reward) == 0 && isArrested == criminal.isArrested && Objects.equals(name, criminal.name) && Objects.equals(surname, criminal.surname) && Objects.equals(dateOfBirth, criminal.dateOfBirth) && Objects.equals(citizenship, criminal.citizenship) && Objects.equals(description, criminal.description);
+        return id == criminal.id && Double.compare(reward, criminal.reward) == 0 && isArrested == criminal.isArrested && Objects.equals(name, criminal.name) && Objects.equals(surname, criminal.surname) && Objects.equals(dateOfBirth, criminal.dateOfBirth) && Objects.equals(citizenship, criminal.citizenship) && Objects.equals(description, criminal.description) && Objects.deepEquals(image, criminal.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, dateOfBirth, citizenship, description, reward, isArrested);
+        return Objects.hash(id, name, surname, dateOfBirth, citizenship, description, reward, isArrested, image);
     }
 
     @Override
@@ -76,6 +79,7 @@ public class Criminal extends AbstractModel {
                 .add("description='" + description + "'")
                 .add("reward=" + reward)
                 .add("isArrested=" + isArrested)
+                .add("image=" + Arrays.toString(image))
                 .toString();
     }
 
@@ -88,6 +92,7 @@ public class Criminal extends AbstractModel {
         private String description;
         private double reward;
         private boolean isArrested;
+        private byte[] image;
 
         public CriminalBuilder(String name, String surname){
             this.name = name;
@@ -117,6 +122,11 @@ public class Criminal extends AbstractModel {
         }
         public CriminalBuilder setIsArrested(boolean isArrested) {
             this.isArrested = isArrested;
+            return this;
+        }
+
+        public CriminalBuilder setImage(byte[] image) {
+            this.image = image;
             return this;
         }
 

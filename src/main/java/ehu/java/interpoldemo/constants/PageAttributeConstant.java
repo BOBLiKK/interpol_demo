@@ -28,5 +28,8 @@ public class PageAttributeConstant {
     public static final String CRIMINAL_DELETED = "Criminal was deleted successfully.";
     public static final String CRIMINAL_NOT_DELETED = "Criminal was not deleted.";
 
+    public static final String STATUS_CHANGED = "Status changed successfully.";
+    public static final String STATUS_NOT_CHANGED = "Status cannot be changed.";
+
     public static final String RESPONSE = "response";
 }

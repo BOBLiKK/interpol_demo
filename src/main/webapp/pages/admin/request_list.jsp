@@ -41,9 +41,41 @@
     tr:hover {
       background-color: #f1f1f1;
     }
+    .status-approved {
+        background-color: #08ee3f !important;/* Красный для rejected */
+    }
+    .status-rejected {
+        background-color: #f1091e !important; /* Зеленый для approved */
+    }
   </style>
 </head>
 <body>
+<c:if test="${message}">
+  <div style="color: #333; background-color: #f9f9f9; border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;">
+      ${message}
+  </div>
+</c:if>
+
+<!-- JavaScript для изменения цвета строки -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Находим все строки таблицы
+        const rows = document.querySelectorAll("tbody tr");
+        rows.forEach(row => {
+            const statusCell = row.querySelector("td:nth-child(9)"); // 9-й столбец для статуса
+            if (statusCell) {
+                const status = statusCell.textContent.trim();
+                if (status === "REJECTED") {
+                    row.classList.add("status-rejected"); // Добавляем класс для красного цвета
+                } else if (status === "APPROVED") {
+                    row.classList.add("status-approved"); // Добавляем класс для зеленого цвета
+                }
+            }
+        });
+    });
+</script>
+
+<!-- Конец JavaScript -->
 <table>
   <thead>
   <tr>
@@ -61,30 +93,38 @@
   </thead>
   <tbody>
   <c:forEach var="request" items="${requests}">
-    <tr>
-      <td><c:out value="${request.userId}" /></td>
-      <td><c:out value="${request.criminal.name}" /></td>
-      <td><c:out value="${request.criminal.surname}" /></td>
-      <td><c:out value="${request.criminal.dateOfBirth}" /></td>
-      <td><c:out value="${request.criminal.citizenship}" /></td>
-      <td><c:out value="${request.criminal.description}" /></td>
-      <td><c:out value="${request.criminal.reward}" /></td>
-      <td><c:out value="${request.comment}" /></td>
-      <td><c:out value="${request.status}" /></td>
-      <td>
-        <form action="controller" method="post" style="display:inline-block;">
-          <input type="hidden" name="command" value="approve_request" />
-          <input type="hidden" name="id" value="${request.requestId}" />
-          <button type="submit" class="btn-approve"><fmt:message bundle="${buttons}" key="button.approve"/></button>
-        </form>
-        <form action="controller" method="post" style="display:inline-block;">
-          <input type="hidden" name="command" value="decline_request" />
-          <input type="hidden" name="id" value="${request.requestId}" />
-          <button type="submit" class="btn-reject"><fmt:message bundle="${buttons}" key="button.reject"/></button>
-        </form>
-      </td>
-    </tr>
+      <tr>
+          <td><c:out value="${request.userId}" /></td>
+          <td><c:out value="${request.criminal.name}" /></td>
+          <td><c:out value="${request.criminal.surname}" /></td>
+          <td><c:out value="${request.criminal.dateOfBirth}" /></td>
+          <td><c:out value="${request.criminal.citizenship}" /></td>
+          <td><c:out value="${request.criminal.description}" /></td>
+          <td><c:out value="${request.criminal.reward}" /></td>
+          <td><c:out value="${request.comment}" /></td>
+          <td><c:out value="${request.status}" /></td>
+          <td>
+              <c:choose>
+                  <c:when test="${request.status == 'PENDING'}">
+                      <form action="controller" method="post" style="display:inline-block;">
+                          <input type="hidden" name="command" value="approve_request" />
+                          <input type="hidden" name="id" value="${request.requestId}" />
+                          <button type="submit" class="btn-approve"><fmt:message bundle="${buttons}" key="button.approve"/></button>
+                      </form>
+                      <form action="controller" method="post" style="display:inline-block;">
+                          <input type="hidden" name="command" value="decline_request" />
+                          <input type="hidden" name="id" value="${request.requestId}" />
+                          <button type="submit" class="btn-reject"><fmt:message bundle="${buttons}" key="button.reject"/></button>
+                      </form>
+                  </c:when>
+                  <c:otherwise>
+                      <span class="disabled-message"><fmt:message bundle="${messages}" key="message.status_locked"/></span>
+                  </c:otherwise>
+              </c:choose>
+          </td>
+      </tr>
   </c:forEach>
+
   </tbody>
 </table>
 <div class="btn-container">

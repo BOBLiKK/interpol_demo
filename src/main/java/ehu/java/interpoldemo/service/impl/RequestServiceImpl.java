@@ -5,6 +5,7 @@ import ehu.java.interpoldemo.dao.impl.RequestDaoImpl;
 import ehu.java.interpoldemo.exception.DaoException;
 import ehu.java.interpoldemo.exception.ServiceException;
 import ehu.java.interpoldemo.model.Request;
+import ehu.java.interpoldemo.model.Status;
 import ehu.java.interpoldemo.service.RequestService;
 
 import java.util.List;
@@ -23,6 +24,9 @@ public class RequestServiceImpl implements RequestService {
 
     public boolean updateRequestStatus(int requestId, String status) throws ServiceException {
         try {
+            if(!isPendingRequest(requestId)) {
+                return false;
+            }
             return requestDao.updateStatus(requestId, status);
         } catch (DaoException e) {
             throw new ServiceException("Error updating request status", e);
@@ -50,6 +54,15 @@ public class RequestServiceImpl implements RequestService {
             return requestDao.findAll();
         } catch (DaoException e) {
             throw new ServiceException("Error retrieving all requests", e);
+        }
+    }
+
+    public boolean isPendingRequest(int requestId) throws ServiceException {
+        Request request = findRequestById(requestId);
+        if(request.getStatus().equals(Status.PENDING)) {
+            return true;
+        }else{
+            return false;
         }
     }
 }

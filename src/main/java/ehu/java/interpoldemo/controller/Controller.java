@@ -15,6 +15,11 @@ import static ehu.java.interpoldemo.constants.PageNameConstant.ERROR_500_PAGE;
 import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
 @WebServlet(name = CONTROLLER, value = CONTROLLER_PATH)
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, // 1 MB
+        maxFileSize = 1024 * 1024 * 10,  // 10 MB
+        maxRequestSize = 1024 * 1024 * 50 // 50 MB
+)
 public class Controller extends HttpServlet {
 
     private static final Logger logger = LogManager.getLogger(Controller.class);

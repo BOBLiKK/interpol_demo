@@ -33,7 +33,7 @@ public final class ParameterNameConstant {
     public static final String COMMENT = "comment";
     public static final String STATUS = "status";
     public static final String REQUESTS = "requests";
-
+    public static final String IMAGE = "image";
 
     //user roles
     public static final String ROLE = "role";

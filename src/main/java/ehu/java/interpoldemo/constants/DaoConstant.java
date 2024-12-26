@@ -18,7 +18,7 @@ public final class DaoConstant {
 
 
     //insert queries
-    public static final String INSERT_CRIMINAL = "INSERT INTO criminals (name, surname, date_of_birth, citizenship, description, reward) VALUES (?, ?, ?, ?, ?, ?)";
+    public static final String INSERT_CRIMINAL = "INSERT INTO criminals (name, surname, date_of_birth, citizenship, description, reward, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
     public static final String INSERT_NEW_USER_WITH_LOGIN = "INSERT INTO users (login, password) VALUES (?, ?)";
     public static final String INSERT_REQUEST = "INSERT INTO requests (user_id, name, surname, date_of_birth, citizenship, description, reward, comment, status) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -27,7 +27,7 @@ public final class DaoConstant {
     public static final String UPDATE_USER ="UPDATE users SET  login = ?, password = ? WHERE id = ?";
     public static final String UPDATE_CRIMINAL = "UPDATE criminals SET name = ?, " +
             "surname = ?, date_of_birth = ?, citizenship = ?, description = ?, " +
-            "reward = ?, is_arrested = ? WHERE id = ?";
+            "reward = ?, image = ?, is_arrested = ? WHERE id = ?";
     public static final String UPDATE_REQUEST_STATUS = "UPDATE requests SET status = ? WHERE request_id = ?";
 
     //delete queries
