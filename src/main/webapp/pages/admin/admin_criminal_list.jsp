@@ -86,8 +86,9 @@
       </c:choose>
       </td>
       <td>
-        <c:if test="${not empty criminal.image}">
-        <img src="data:image/png;base64,${fn:escapeXml(criminal.image)}" alt="image" class="thumbnail"> </c:if>
+        <c:if test="${not empty criminal.imageBase64}">
+          <img src="data:image/png;base64,${fn:escapeXml(criminal.imageBase64)}" alt="Criminal Image" class="thumbnail" />
+        </c:if>
       </td>
       <td>
         <form action="controller" method="post" style="display:inline-block;">

@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -43,8 +42,6 @@ public class AddCriminalCommand implements Command {
         try {
             Part filePart = request.getPart(IMAGE); // Получение файла из запроса
             if (filePart != null) {
-                logger.debug("File name: " + filePart.getSubmittedFileName());
-                logger.debug("File size: " + filePart.getSize());
                 try (InputStream inputStream = filePart.getInputStream()) {
                     image = inputStream.readAllBytes();
                 } catch (IOException e) {

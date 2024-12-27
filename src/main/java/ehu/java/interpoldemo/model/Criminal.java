@@ -1,6 +1,7 @@
 package ehu.java.interpoldemo.model;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -54,7 +55,12 @@ public class Criminal extends AbstractModel {
         return isArrested;
     }
     public byte[] getImage() {return image;}
-
+    public String getImageBase64() {
+        if (image == null || image.length == 0) {
+            return null;
+        }
+        return Base64.getEncoder().encodeToString(image);
+    }
 
     @Override
     public boolean equals(Object o) {

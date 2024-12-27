@@ -9,6 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://interpoldemo/custom" prefix="custom" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <fmt:setLocale value="${sessionScope.locale}" />
 <fmt:setBundle basename="localization.buttons" var="buttons" />
 <fmt:setBundle basename="localization.messages" var="messages" />
@@ -92,7 +93,7 @@
 </head>
 <body>
 <h1><fmt:message bundle="${titles}" key="title.edit_criminal"/></h1>
-<form action="controller" method="post">
+<form method="POST" action="${pageContext.request.contextPath}/controller" class="border p-4 rounded shadow" enctype="multipart/form-data">
     <input type="hidden" name="command" value="edit_criminal" />
     <input type="hidden" name="id" value="${criminal.id}" />
 
@@ -113,6 +114,12 @@
 
     <label for="reward"><fmt:message bundle="${tables}" key="table.reward"/></label>
     <input type="number" step="0.01" id="reward" name="reward" value="${criminal.reward}" required />
+
+    <label for="image"><fmt:message bundle="${tables}" key="table.image"/></label>
+    <input type="file" id="image" name="image" accept="image/*" />
+    <c:if test="${not empty criminal.imageBase64}">
+        <img src="data:image/png;base64,${fn:escapeXml(criminal.imageBase64)}" alt="Criminal Image" class="image-preview" />
+    </c:if>
 
     <button type="submit"><fmt:message bundle="${buttons}" key="button.save_changes"/></button>
     <div class="btn-container">

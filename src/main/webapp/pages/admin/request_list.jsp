@@ -47,6 +47,12 @@
     .status-rejected {
         background-color: #f1091e !important; /* Зеленый для approved */
     }
+    img.thumbnail {
+        max-width: 100px;
+        max-height: 100px;
+        width: auto;
+        height: auto;
+    }
   </style>
 </head>
 <body>
@@ -86,6 +92,7 @@
     <th><fmt:message bundle="${tables}" key="table.citizenship"/></th>
     <th><fmt:message bundle="${tables}" key="table.description"/></th>
     <th><fmt:message bundle="${tables}" key="table.reward"/></th>
+    <th><fmt:message bundle="${tables}" key="table.image"/></th>
     <th><fmt:message bundle="${tables}" key="table.comment"/></th>
     <th><fmt:message bundle="${tables}" key="table.status"/></th>
     <th><fmt:message bundle="${tables}" key="table.actions"/></th>
@@ -101,6 +108,11 @@
           <td><c:out value="${request.criminal.citizenship}" /></td>
           <td><c:out value="${request.criminal.description}" /></td>
           <td><c:out value="${request.criminal.reward}" /></td>
+          <td>
+              <c:if test="${not empty request.criminal.imageBase64}">
+                  <img src="data:image/png;base64,${fn:escapeXml(request.criminal.imageBase64)}" alt="Criminal Image" class="thumbnail" />
+              </c:if>
+          </td>
           <td><c:out value="${request.comment}" /></td>
           <td><c:out value="${request.status}" /></td>
           <td>

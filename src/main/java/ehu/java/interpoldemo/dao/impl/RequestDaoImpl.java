@@ -34,8 +34,9 @@ public class RequestDaoImpl extends BaseDao<Request> implements RequestDao {
         preparedStatement.setString(5, request.getCriminal().getCitizenship());
         preparedStatement.setString(6, request.getCriminal().getDescription());
         preparedStatement.setDouble(7, request.getCriminal().getReward());
-        preparedStatement.setString(8, request.getComment());
-        preparedStatement.setString(9, request.getStatus().getStatus());
+        preparedStatement.setBytes(8, request.getCriminal().getImage());
+        preparedStatement.setString(9, request.getComment());
+        preparedStatement.setString(10, request.getStatus().getStatus());
     }
 
 
@@ -117,6 +118,7 @@ public class RequestDaoImpl extends BaseDao<Request> implements RequestDao {
         String citizenship = resultSet.getString(CITIZENSHIP);
         String description = resultSet.getString(DESCRIPTION);
         double reward = resultSet.getDouble(REWARD);
+        byte[] image = resultSet.getBytes(IMAGE);
         String comments = resultSet.getString(COMMENT);
         Status status = Status.valueOf(resultSet.getString(STATUS));
 
@@ -125,6 +127,7 @@ public class RequestDaoImpl extends BaseDao<Request> implements RequestDao {
                 .setCitizenship(citizenship)
                 .setDescription(description)
                 .setReward(reward)
+                .setImage(image)
                 .build();
 
         return new Request.RequestBuilder()

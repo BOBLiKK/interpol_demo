@@ -16,12 +16,11 @@ public final class DaoConstant {
     public static final String SELECT_REQUEST_BY_USER_ID = "SELECT * FROM requests WHERE user_id = ?";
     public static final String SELECT_ALL_REQUESTS = "SELECT * FROM requests";
 
-
     //insert queries
     public static final String INSERT_CRIMINAL = "INSERT INTO criminals (name, surname, date_of_birth, citizenship, description, reward, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
     public static final String INSERT_NEW_USER_WITH_LOGIN = "INSERT INTO users (login, password) VALUES (?, ?)";
-    public static final String INSERT_REQUEST = "INSERT INTO requests (user_id, name, surname, date_of_birth, citizenship, description, reward, comment, status) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String INSERT_REQUEST = "INSERT INTO requests (user_id, name, surname, date_of_birth, citizenship, description, reward, image, comment, status) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     //update queries
     public static final String UPDATE_USER ="UPDATE users SET  login = ?, password = ? WHERE id = ?";

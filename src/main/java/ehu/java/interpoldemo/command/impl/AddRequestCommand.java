@@ -8,15 +8,24 @@ import ehu.java.interpoldemo.model.Request;
 import ehu.java.interpoldemo.model.Status;
 import ehu.java.interpoldemo.service.RequestService;
 import ehu.java.interpoldemo.service.impl.RequestServiceImpl;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import static ehu.java.interpoldemo.constants.PageAttributeConstant.*;
 import static ehu.java.interpoldemo.constants.PageNameConstant.*;
 import static ehu.java.interpoldemo.constants.ParameterNameConstant.*;
 
-
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, // 1 MB
+        maxFileSize = 1024 * 1024 * 10,  // 10 MB
+        maxRequestSize = 1024 * 1024 * 50 // 50 MB
+)
 public class AddRequestCommand implements Command {
 
     private final RequestService requestService = new RequestServiceImpl();
@@ -33,14 +42,25 @@ public class AddRequestCommand implements Command {
         String citizenship = request.getParameter(CITIZENSHIP);
         String description = request.getParameter(DESCRIPTION);
         String reward = request.getParameter(REWARD);
+        byte[] image = null;
         String comment = request.getParameter(COMMENT);
-        try {
+
+        try{
+            Part filePart = request.getPart(IMAGE); // Получение файла из запроса
+            if (filePart != null) {
+                try (InputStream inputStream = filePart.getInputStream()) {
+                    image = inputStream.readAllBytes();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             int userId = (int) request.getSession().getAttribute(USER_ID);
             Criminal criminal = new Criminal.CriminalBuilder(name, surname)
                     .setDateOfBirth(dateOfBirth)
                     .setCitizenship(citizenship)
                     .setDescription(description)
                     .setReward(Double.parseDouble(reward))
+                    .setImage(image)
                     .build();
 
             Request newRequest = new Request.RequestBuilder()
@@ -55,7 +75,8 @@ public class AddRequestCommand implements Command {
             }else{
                 request.setAttribute(MESSAGE, REQUEST_NOT_ADDED);
             }
-        } catch (NumberFormatException | ServiceException e) {
+
+        }catch(ServiceException | IOException | ServletException e){
             throw new CommandException(e.getMessage() + e.getCause() + e.getStackTrace());
         }
         return MAIN_PAGE;

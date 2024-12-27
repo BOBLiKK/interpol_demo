@@ -24,7 +24,7 @@
 <body>
 <div class="container mt-5">
     <h1><fmt:message bundle="${titles}" key="title.add_request"/></h1>
-    <form action="${pageContext.request.contextPath}/controller" method="post">
+    <form method="POST" action="${pageContext.request.contextPath}/controller" class="border p-4 rounded shadow" enctype="multipart/form-data">
         <input type="hidden" name="command" value="add_request"/>
         <div class="mb-3">
             <label for="name" class="form-label"><fmt:message bundle="${tables}" key="table.name"/></label>
@@ -116,6 +116,12 @@
             <label for="reward" class="form-label"><fmt:message bundle="${tables}" key="table.reward"/></label>
             <input type="number" class="form-control" id="reward" name="reward" step="0.01" required/>
         </div>
+
+        <div class="mb-3">
+            <label for="image"><fmt:message bundle="${tables}" key="table.image"/></label>
+            <input type="file" name="image" id="image" class="form-control" accept="image/*" required>
+        </div>
+
         <div class="mb-3">
             <label for="comment" class="form-label"><fmt:message bundle="${tables}" key="table.comment"/></label>
             <textarea class="form-control" id="comment" name="comment" rows="2"></textarea>
