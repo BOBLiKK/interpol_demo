@@ -1,7 +1,5 @@
 INTERPOL
-Администратор осуществляет управление списком 
-разыскиваемых преступников, а также 
-устанавливает и выплачивает вознаграждение. 
-Клиент заполняет Заявку на розыск. Администратор 
-управляет Клиентами и Заявками, просматривает поступившие Заявки, 
-подтверждает\отклоняет их, закрывает неактуальные.  
+The administrator manages the list of wanted criminals, and also sets and pays the reward.
+The Client fills out the Wanted Request. The administrator
+manages Clients and Requests, reviews received Requests,
+confirms/rejects them, closes irrelevant ones.
